@@ -105,3 +105,7 @@ dist
 
 .DS_Store
 .vscode
+.idea/.gitignore
+.idea/modules.xml
+.idea/project-siemenverlinden.iml
+.idea/vcs.xml
