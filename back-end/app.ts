@@ -6,7 +6,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import {loanRouter} from "./controller/loan.routes";
 import {bookRouter} from "./controller/book.routes";
-import {memberRouter} from "./controller/member.routes";
+import {userRouter} from "./controller/user.routes";
 
 const app = express();
 dotenv.config();
@@ -16,7 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/loans', loanRouter);
 app.use('/books', bookRouter);
-app.use('/members', memberRouter);
+app.use('/users', userRouter);
 
 app.get('/status', (req, res) => {
     res.json({ message: 'Back-end is running...' });

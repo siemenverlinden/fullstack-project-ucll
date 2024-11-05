@@ -1,38 +1,42 @@
+import {
+    Book as BooksPrisma,
+} from '@prisma/client';
+
 export class Book {
 
-    private id?: string;
+    private bookId?: string;
     private title: string;
     private description: string;
     private authors: string[];
     private isbn: string;
-    private copiesAvailable: number;
+    private totalCopies: number;
 
 
 
     constructor(book: {
-        id?: string;
+        bookId?: string;
         title: string;
         description: string;
         authors: string[];
         isbn: string;
-        copiesAvailable: number;
+        totalCopies: number;
     }) {
 
-    this.id = book.id;
+    this.bookId = book.bookId;
     this.title = book.title;
     this.description = book.description;
     this.authors = book.authors;
     this.isbn = book.isbn;
-    this.copiesAvailable = book.copiesAvailable;
+    this.totalCopies = book.totalCopies;
     }
 
 
-    getId(): string | undefined {
-        return this.id;
+    getBookId(): string | undefined {
+        return this.bookId;
     }
 
-    getCopiesAvailable(): number {
-        return this.copiesAvailable;
+    getTotalCopies(): number {
+        return this.totalCopies;
     }
     getIsbn(): string {
         return this.isbn;
@@ -47,23 +51,30 @@ export class Book {
         return this.title;
     }
 
-    checkAvailability(): boolean {
-        return this.copiesAvailable > 0;
-    }
-
-    addCopy(): void {
-        this.copiesAvailable++;
-    }
-
-    removeCopy(): void {
-        this.copiesAvailable--;
-    }
     equals(book: Book): boolean {
         return (
             this.title === book.getTitle() &&
             this.description === book.getDescription() &&
             this.authors === book.getAuthors() &&
             this.isbn === book.getIsbn()
+        );
+    }
+    static from({
+        bookId,
+        title,
+        description,
+        authors,
+        isbn,
+                    totalCopies,
+    }: BooksPrisma ) {
+        return new Book({
+                bookId,
+                title,
+                description,
+                authors,
+                isbn,
+            totalCopies,
+            }
         );
     }
 }

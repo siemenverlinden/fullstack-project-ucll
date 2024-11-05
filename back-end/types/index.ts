@@ -4,21 +4,14 @@ import {User} from "../model/user";
 type Role = 'admin' | 'member' | 'buyer';
 
 type UserInput = {
-    id?: string;
+    userId?: string;
     email: string;
     password: string;
-    role: Role;
-    created_at: Date;
-}
-
-type MemberInput = {
-    id?: string;
-    user: UserInput;
-    phone: string;
+    createdAt: Date;
 }
 
 type BookInput = {
-    id?: string;
+    bookId?: string;
     title: string;
     description: string;
     authors: string[];
@@ -27,16 +20,15 @@ type BookInput = {
 
 }
 type LoanInput = {
-    id?: string;
+    loanId?: string;
     book: BookInput;
-    member: MemberInput;
+    user: UserInput;
     borrowDate: Date;
     returnDate: Date;
 }
 export {
     Role,
     UserInput,
-    MemberInput,
     BookInput,
     LoanInput
 };

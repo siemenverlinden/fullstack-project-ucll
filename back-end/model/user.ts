@@ -1,33 +1,30 @@
 import {Role} from "../types";
+import { User as UserPrisma } from '@prisma/client';
 
 export class User {
 
-    private id?: string;
+    private userId?: string;
     private email: string;
     private password: string;
-    private role: string;
-    private created_at: Date;
+    private createdAt: Date;
 
     constructor(user: {
-        id?: string;
+        userId?: string;
         email: string;
         password: string;
-        role: Role;
-        created_at: Date;
+        createdAt: Date;
     }) {
         this.validate(user);
 
-        this.id = user.id;
+        this.userId = user.userId;
         this.email = user.email;
         this.password = user.password;
-        this.role = user.role;
-        this.created_at = user.created_at;
+        this.createdAt = user.createdAt;
     }
 
     validate(user: {
         email: string;
         password: string;
-        role: Role;
     }) {
         if (!user.email.trim()) {
             throw new Error('Email is required');
@@ -35,20 +32,14 @@ export class User {
         if (!user.password.trim()) {
             throw new Error('Password is required');
         }
-        if (!user.role) {
-            throw new Error('Role is required');
-        }
 
     }
 
-    getRole(): string {
-        return this.role;
-    }
     getCreatedAt(): Date {
-        return this.created_at;
+        return this.createdAt;
     }
-    getId(): string | undefined {
-        return this.id;
+    getUserId(): string | undefined {
+        return this.userId;
     }
     getEmail(): string {
         return this.email;
@@ -59,11 +50,24 @@ export class User {
 
     equals(user: User): boolean {
         return (
-            this.id === user.getId() &&
+            this.userId === user.getUserId() &&
             this.email === user.getEmail() &&
             this.password === user.getPassword() &&
-            this.role === user.getRole() &&
-            this.created_at === user.getCreatedAt()
+            this.createdAt === user.getCreatedAt()
         );
     }
+    static from({
+        userId,
+        email,
+        password,
+        createdAt,
+    }: UserPrisma) {
+        return new User({
+            userId,
+            email,
+            password,
+            createdAt,
+        });
+
+                }
 }

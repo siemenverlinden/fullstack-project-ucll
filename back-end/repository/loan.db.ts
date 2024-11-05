@@ -2,31 +2,24 @@ import {Loan} from '../model/loan';
 import {Book} from '../model/book';
 import {User} from "../model/user";
 import {v4 as uuidv4} from "uuid";
-import {Member} from "../model/member";
 
 const loans = [
     new Loan({
         id: uuidv4(),
         book: new Book({
-            id: uuidv4(),
+            bookId: uuidv4(),
             title: 'The Lord of the Rings',
             description: 'The Lord if the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.',
             authors: ['J. R. R. Tolkien'],
             isbn: '9780261102385',
-            copiesAvailable: 5,
+            totalCopies: 5,
         }),
-        member: new Member(
+        user: new User(
             {
-                id: uuidv4(),
-                user: new User({
-                    id:  uuidv4(),
+                    userId:  uuidv4(),
                     email: 'john@mail.com',
                     password: 'password',
-                    role: 'member',
-                    created_at: new Date('2021-01-01')}),
-
-                phone: '123456789',
-            },),
+                    createdAt: new Date('2021-01-01')}),
         borrowDate: new Date(),
         returnDate: new Date(),
     }),
@@ -38,18 +31,18 @@ const createLoan = (loan: Loan): Loan => {
     return loan;
 }
 
-const getLoansByMember = (member: Member): Loan[] => {
-    return loans.filter(Loan => Loan.getMember().getId() === member.getId());
+const getLoansByUser = (user: User): Loan[] => {
+    return loans.filter(Loan => Loan.getUser().getUserId() === user.getUserId());
 }
 
 const getLoansByBook = (book: Book): Loan[] => {
-    return loans.filter(loan => loan.getBook().getId() === book.getId());
+    return loans.filter(loan => loan.getBook().getBookId() === book.getBookId());
 }
 const getAllLoans = (): Loan[] => loans;
 
 export default {
     createLoan,
-    getLoansByMember,
+    getLoansByUser,
     getLoansByBook,
     getAllLoans,
 }

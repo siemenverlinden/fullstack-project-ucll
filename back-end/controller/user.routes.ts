@@ -22,9 +22,9 @@
  */
 import express, { NextFunction, Request, Response } from 'express';
 import loanService from '../service/loan.service';
-import memberService from "../service/member.service";
+import userService from "../service/user.service";
 
-const memberRouter = express.Router();
+const userRouter = express.Router();
 
 /**
  * @swagger
@@ -41,14 +41,14 @@ const memberRouter = express.Router();
  *               items:
  *                  $ref: '#/components/schemas/Lecturer'
  */
-memberRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+userRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const members = await memberService.getAllMembers()
-        res.status(200).json(members);
+        const users = await userService.getAllUsers()
+        res.status(200).json(users);
     } catch (error) {
         next(error);
     }
 });
 
 
-export { memberRouter };
+export { userRouter };
