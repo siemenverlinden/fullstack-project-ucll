@@ -16,7 +16,7 @@ type BookInput = {
     description: string;
     authors: string[];
     isbn: string;
-    copiesAvailable: number;
+    copiesCount?: number;
 
 }
 type LoanInput = {

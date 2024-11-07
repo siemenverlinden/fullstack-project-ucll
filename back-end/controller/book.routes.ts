@@ -1,25 +1,4 @@
-/**
- * @swagger
- *   components:
- *    securitySchemes:
- *     bearerAuth:
- *      type: http
- *      scheme: bearer
- *      bearerFormat: JWT
- *    schemas:
- *      Lecturer:
- *          type: object
- *          properties:
- *            id:
- *              type: number
- *              format: int64
- *            name:
- *              type: string
- *              description: Lecturer name.
- *            expertise:
- *              type: string
- *              description: Lecturer expertise.
- */
+
 import express, { NextFunction, Request, Response } from 'express';
 import bookservice from '../service/book.service';
 

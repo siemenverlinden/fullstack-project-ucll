@@ -1,39 +1,41 @@
-// pages/books/index.tsx
+// pages/users/index.tsx
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Link from 'next/link';
 import Head from "next/head";
 import Header from "@components/Header";
-import { Book } from "@types";
-import { useState, useEffect } from "react";
-import BookService from "@services/BookService";
-import BooksOverviewTable from "@components/books/BookOverviewTable";
+import UsersOverviewTable from "@components/users/UserOverviewTable";
+import { User } from "@types";
+import UserService from "@services/UserService";
 
-const BooksPage: React.FC = () => {
+const UsersPage: React.FC = () => {
 
-    const [books, setBooks] = useState<Array<Book>>();
+    const [users, setUsers] = useState<Array<User>>();
     const [error, setError] = useState<string>();
-    
-    
-    const getBooks = async () => {
-        setError("");
-        const response = await BookService.getAllBooks();
+
+    const getUsers = async () => {
+        setError('');
+        const response = await UserService.getAllUsers();
+
         if (!response.ok) {
             if (response.status === 401) {
                 setError(
-                    "You are not authorized to view this page. Please login first."
+                    'You are not authorized to view this page. Please login first.'
                 );
             } else {
                 setError(response.statusText);
             }
         } else {
-            const books = await response.json();
-            setBooks(books);
+            const users = await response.json();
+            setUsers(users);
         }
     };
+
     useEffect(() => {
-        getBooks();
+        getUsers();
     }, []);
+
+
 
     return (
         <>
@@ -48,15 +50,15 @@ const BooksPage: React.FC = () => {
             </Head>
             <Header/>
             <main className="container mt-4">
-                <h2>Boeken</h2>
-                <Link href="/books/add" className="btn btn-success mb-3">
-                    Nieuw Boek Toevoegen
+                <h2>Leden</h2>
+                <Link href="/front-end/pages/users/add" className="btn btn-success mb-3">
+                    Nieuw Lid Toevoegen
                 </Link>
                 <section>
                     {error && <div className="text-red-800">{error}</div>}
-                    {books && (
-                        <BooksOverviewTable
-                            books={books}
+                    {users && (
+                        <UsersOverviewTable
+                            users={users}
                         />
                     )}
                 </section>
@@ -65,4 +67,4 @@ const BooksPage: React.FC = () => {
     );
 };
 
-export default BooksPage;
+export default UsersPage;

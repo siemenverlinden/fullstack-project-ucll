@@ -27,7 +27,7 @@ const Header: React.FC = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/members" className="nav-link">
+                            <Link href="/users" className="nav-link">
                                 Leden
                             </Link>
                         </li>

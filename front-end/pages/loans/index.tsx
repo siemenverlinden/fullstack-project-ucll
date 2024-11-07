@@ -1,4 +1,4 @@
-// pages/members/index.tsx
+// pages/users/index.tsx
 
 import React, {useState} from 'react';
 import Link from 'next/link';

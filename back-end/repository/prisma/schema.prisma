@@ -13,26 +13,20 @@ model User {
   password  String
   phone     String
   createdAt DateTime @default(now())
-  Admin     Admin?
-}
-
-model Admin {
-  adminId String @id @default(uuid())
-  status  String // volunteer/ prof
-  userId  String @unique
-  user    User   @relation(fields: [userId], references: [userId])
+  admin     Boolean  @default(false)
+  loans     Loan[]
 }
 
 model Loan {
   loanId     String    @id @default(uuid())
-  bookId     String
-  memberId   String
+  userId     String
   borrowDate DateTime  @default(now())
   dueDate    DateTime
   returnDate DateTime?
-
+  bookId     String    @unique
   // Relaties
-  book Book @relation(fields: [bookId], references: [bookId])
+  book       Book      @relation(fields: [bookId], references: [bookId])
+  user       User      @relation(fields: [userId], references: [userId])
 }
 
 model Book {
@@ -41,7 +35,6 @@ model Book {
   authors     String[]
   description String
   isbn        String   @unique
-  totalCopies Int
-
-  loans Loan[]
+  LoanId      String?
+  Loan        Loan?
 }

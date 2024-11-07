@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { set } from 'date-fns';
 import {create} from "node:domain";
+import {v4 as uuidv4} from "uuid";
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,6 @@ const main = async () => {
     await prisma.user.deleteMany();
     await prisma.book.deleteMany();
     await prisma.loan.deleteMany({});
-    await prisma.admin.deleteMany();
 
     const user = await prisma.user.create({
         data: {
@@ -21,41 +21,55 @@ const main = async () => {
         },
     });
 
-    const adminUser = await prisma.admin.create({
+    const adminUser = await prisma.user.create({
         data: {
-            status: "volunteer",
-            user: {
-                create: {
-                    password: "admin",
-                    email: 'admin@example.com',
-                    phone: '0612345678',
-                },
-            },
+            password: "admin",
+            email: 'admin@example.com',
+            phone: '0612345678',
+            admin: true
         },
      });
 
 
+
     const book1 = await prisma.book.create({
         data: {
+            bookId:uuidv4(),
             title: 'De Ontdekking van de Hemel',
             authors: ['Harry Mulisch'],
             description: 'Roman',
             isbn: '9789023469154',
-            totalCopies: 5,
         },
     });
 
+
+
     const book2 = await prisma.book.create({
         data: {
+            bookId:uuidv4(),
             title: 'Het Diner',
             authors: ['Herman Koch'],
             description: 'Thriller',
             isbn: '9789025433511',
-            totalCopies: 3,
         },
     });
 
-
+   const loan1 = await prisma.loan.create({
+       data: {
+              borrowDate: new Date(),
+              dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
+              user: {
+                    connect: {
+                        userId: user.userId,
+                    },
+              },
+                book: {
+                        connect: {
+                            bookId: book1.bookId,
+                        },
+                },
+       }
+   });
 };
 
 (async () => {

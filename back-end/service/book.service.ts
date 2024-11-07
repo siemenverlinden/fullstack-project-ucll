@@ -7,4 +7,5 @@ import { v4 as uuidv4 } from 'uuid'; //generate unique id
 import { BookInput } from '../types';
 
 const getAllBooks = async (): Promise<Book[]> => bookDb.getAllBooks();
+
 export default { getAllBooks };

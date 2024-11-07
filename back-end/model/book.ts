@@ -9,8 +9,7 @@ export class Book {
     private description: string;
     private authors: string[];
     private isbn: string;
-    private totalCopies: number;
-
+    private copiesCount?: number;
 
 
     constructor(book: {
@@ -19,7 +18,7 @@ export class Book {
         description: string;
         authors: string[];
         isbn: string;
-        totalCopies: number;
+        copiesCount?: number;
     }) {
 
     this.bookId = book.bookId;
@@ -27,7 +26,7 @@ export class Book {
     this.description = book.description;
     this.authors = book.authors;
     this.isbn = book.isbn;
-    this.totalCopies = book.totalCopies;
+    this.copiesCount = book.copiesCount;
     }
 
 
@@ -35,9 +34,6 @@ export class Book {
         return this.bookId;
     }
 
-    getTotalCopies(): number {
-        return this.totalCopies;
-    }
     getIsbn(): string {
         return this.isbn;
     }
@@ -50,6 +46,9 @@ export class Book {
     getTitle(): string {
         return this.title;
     }
+    getCopiesCount(): number | undefined {
+        return this.copiesCount;
+    }
 
     equals(book: Book): boolean {
         return (
@@ -59,22 +58,22 @@ export class Book {
             this.isbn === book.getIsbn()
         );
     }
-    static from({
-        bookId,
-        title,
-        description,
-        authors,
-        isbn,
-                    totalCopies,
-    }: BooksPrisma ) {
+
+
+    /**
+     * Type van de parameter in de from methode veranderen naar any
+     *
+     * @param bookPrisma
+     */
+    static from(bookPrisma: any): Book {
         return new Book({
-                bookId,
-                title,
-                description,
-                authors,
-                isbn,
-            totalCopies,
-            }
-        );
+            bookId: bookPrisma.bookId,
+            title: bookPrisma.title,
+            description: bookPrisma.description,
+            authors: bookPrisma.authors,
+            isbn: bookPrisma.isbn,
+            copiesCount: bookPrisma.bookCopies?.length || 0, 
+        });
     }
+
 }
