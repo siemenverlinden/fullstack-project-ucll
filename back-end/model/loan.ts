@@ -1,40 +1,41 @@
 import { User } from './user';
-import {Book} from "./book";
+import {BookCopy} from "./bookCopy";
 import {
     Loan as LoanPrisma,
     User as UserPrisma,
-    Book as BookPrisma,
+    BookCopy as BookCopyPrisma,
+    Book as BooksPrisma
 } from '@prisma/client';
 
 
 export class Loan {
-    private loanId?: string;
-    private book: Book;
+    private id?: string;
+    private bookCopy: BookCopy;
     private user: User;
     private borrowDate: Date;
     private returnDate?: Date;
 
     constructor(loan: {
-        loanId?: string;
-        book: Book;
+        id?: string;
+        bookCopy: BookCopy;
         user: User;
         borrowDate: Date;
         returnDate?: Date;
     }) {
-        this.loanId = loan.loanId;
-        this.book = loan.book;
+        this.id = loan.id;
+        this.bookCopy = loan.bookCopy;
         this.user = loan.user;
         this.borrowDate = loan.borrowDate;
         this.returnDate = loan.returnDate;
     }
 
     // Getter-methoden
-    getLoanId(): string | undefined {
-        return this.loanId;
+    getId(): string | undefined {
+        return this.id;
     }
 
-    getBook(): Book {
-        return this.book;
+    getBookCopy(): BookCopy {
+        return this.bookCopy;
     }
 
     getUser(): User {
@@ -52,32 +53,22 @@ export class Loan {
     // Vergelijkingsmethode
     equals(loan: Loan): boolean {
         return (
-            this.loanId === loan.getLoanId() &&
+            this.id === loan.getId() &&
             this.user.equals(loan.getUser()) &&
-            this.book.equals(loan.getBook()) &&
+            this.bookCopy.equals(loan.getBookCopy()) &&
             this.borrowDate.getTime() === loan.getBorrowDate().getTime() &&
             ((this.returnDate && loan.getReturnDate() && this.returnDate.getTime() === loan.getReturnDate()!.getTime()) ||
                 (!this.returnDate && !loan.getReturnDate()))
         );
     }
 
-
-    static from({
-                    loanId,
-                    book,
-                    user,
-                    borrowDate,
-                }: LoanPrisma & {
-        book: BookPrisma;
-        user: UserPrisma;
-    }) {
+    static from({ id, bookCopy, user, borrowDate }: LoanPrisma & { user: UserPrisma, bookCopy: BookCopyPrisma & { book: BooksPrisma }  }) {
         return new Loan({
-            loanId,
-            book: Book.from(book),
+            id,
+            bookCopy: BookCopy.from(bookCopy),
             user: User.from(user),
             borrowDate,
         });
 
     }
-
 }

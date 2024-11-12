@@ -9,9 +9,10 @@ import {v4 as uuidv4} from "uuid";
 const prisma = new PrismaClient();
 
 const main = async () => {
-    await prisma.user.deleteMany();
-    await prisma.book.deleteMany();
     await prisma.loan.deleteMany({});
+    await prisma.bookCopy.deleteMany({});
+    await prisma.user.deleteMany();
+    await prisma.book.deleteMany()
 
     const user = await prisma.user.create({
         data: {
@@ -34,10 +35,8 @@ const main = async () => {
 
     const book1 = await prisma.book.create({
         data: {
-            bookId:uuidv4(),
             title: 'De Ontdekking van de Hemel',
-            authors: ['Harry Mulisch'],
-            description: 'Roman',
+            authors: 'Harry Mulisch',
             isbn: '9789023469154',
         },
     });
@@ -46,30 +45,34 @@ const main = async () => {
 
     const book2 = await prisma.book.create({
         data: {
-            bookId:uuidv4(),
             title: 'Het Diner',
-            authors: ['Herman Koch'],
-            description: 'Thriller',
+            authors: 'Herman Koch',
             isbn: '9789025433511',
         },
     });
 
-   const loan1 = await prisma.loan.create({
-       data: {
-              borrowDate: new Date(),
-              dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
-              user: {
-                    connect: {
-                        userId: user.userId,
-                    },
-              },
-                book: {
-                        connect: {
-                            bookId: book1.bookId,
-                        },
+    const bookCopy1 = await prisma.bookCopy.create({
+        data: {
+            book: {
+                connect: {
+                    id: book1.id,
                 },
-       }
-   });
+            },
+            loan: {
+                create: {
+                    borrowDate: new Date(),
+                    dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
+                    user: {
+                        connect: {
+                            id: user.id,
+                        },
+                    },
+            }
+        },
+        },
+    });
+    
+
 };
 
 (async () => {

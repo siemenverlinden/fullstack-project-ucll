@@ -8,12 +8,13 @@ import { Book } from "@types";
 import { useState, useEffect } from "react";
 import BookService from "@services/BookService";
 import BooksOverviewTable from "@components/books/BookOverviewTable";
+import AddBookButton from "@components/books/AddBookButton";
 
 const BooksPage: React.FC = () => {
 
     const [books, setBooks] = useState<Array<Book>>();
     const [error, setError] = useState<string>();
-    
+
     
     const getBooks = async () => {
         setError("");
@@ -49,9 +50,7 @@ const BooksPage: React.FC = () => {
             <Header/>
             <main className="container mt-4">
                 <h2>Boeken</h2>
-                <Link href="/books/add" className="btn btn-success mb-3">
-                    Nieuw Boek Toevoegen
-                </Link>
+               <AddBookButton />
                 <section>
                     {error && <div className="text-red-800">{error}</div>}
                     {books && (

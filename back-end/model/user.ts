@@ -3,20 +3,20 @@ import { User as UserPrisma } from '@prisma/client';
 
 export class User {
 
-    private userId?: string;
+    private id?: string;
     private email: string;
     private password: string;
     private createdAt: Date;
 
     constructor(user: {
-        userId?: string;
+        id?: string;
         email: string;
         password: string;
         createdAt: Date;
     }) {
         this.validate(user);
 
-        this.userId = user.userId;
+        this.id = user.id;
         this.email = user.email;
         this.password = user.password;
         this.createdAt = user.createdAt;
@@ -38,8 +38,8 @@ export class User {
     getCreatedAt(): Date {
         return this.createdAt;
     }
-    getUserId(): string | undefined {
-        return this.userId;
+    getId(): string | undefined {
+        return this.id;
     }
     getEmail(): string {
         return this.email;
@@ -48,22 +48,25 @@ export class User {
         return this.password;
     }
 
+    setPassword(password: string) {
+        this.password = password;
+    }
     equals(user: User): boolean {
         return (
-            this.userId === user.getUserId() &&
+            this.id === user.getId() &&
             this.email === user.getEmail() &&
             this.password === user.getPassword() &&
             this.createdAt === user.getCreatedAt()
         );
     }
     static from({
-        userId,
+        id,
         email,
         password,
         createdAt,
     }: UserPrisma) {
         return new User({
-            userId,
+            id,
             email,
             password,
             createdAt,

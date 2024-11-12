@@ -4,56 +4,44 @@ import {
 
 export class Book {
 
-    private bookId?: string;
+    private id?: string;
     private title: string;
-    private description: string;
-    private authors: string[];
+    private authors: string;
     private isbn: string;
-    private copiesCount?: number;
 
 
     constructor(book: {
-        bookId?: string;
+        id?: string;
         title: string;
-        description: string;
-        authors: string[];
+        authors: string;
         isbn: string;
-        copiesCount?: number;
     }) {
 
-    this.bookId = book.bookId;
+    this.id = book.id;
     this.title = book.title;
-    this.description = book.description;
     this.authors = book.authors;
     this.isbn = book.isbn;
-    this.copiesCount = book.copiesCount;
     }
 
 
-    getBookId(): string | undefined {
-        return this.bookId;
+    getId(): string | undefined {
+        return this.id;
     }
 
     getIsbn(): string {
         return this.isbn;
     }
-    getAuthors(): string[] {
+    getAuthors(): string {
         return this.authors;
-    }
-    getDescription(): string {
-        return this.description;
     }
     getTitle(): string {
         return this.title;
     }
-    getCopiesCount(): number | undefined {
-        return this.copiesCount;
-    }
+
 
     equals(book: Book): boolean {
         return (
             this.title === book.getTitle() &&
-            this.description === book.getDescription() &&
             this.authors === book.getAuthors() &&
             this.isbn === book.getIsbn()
         );
@@ -67,12 +55,10 @@ export class Book {
      */
     static from(bookPrisma: any): Book {
         return new Book({
-            bookId: bookPrisma.bookId,
+            id: bookPrisma.id,
             title: bookPrisma.title,
-            description: bookPrisma.description,
             authors: bookPrisma.authors,
             isbn: bookPrisma.isbn,
-            copiesCount: bookPrisma.bookCopies?.length || 0, 
         });
     }
 

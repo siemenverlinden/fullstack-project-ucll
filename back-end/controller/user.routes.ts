@@ -50,5 +50,12 @@ userRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-
+userRouter.post('/signup', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await userService.createUser(req.body)
+        res.status(200).json(user);
+    } catch (error) {
+        next(error);
+    }
+});
 export { userRouter };

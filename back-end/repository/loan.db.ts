@@ -8,7 +8,7 @@ const getAllLoans
         const loansPrisma = await database.loan.findMany({
             include: {
                 user: true,
-                book: true
+                bookCopy: { include: { book: true } },
         }
         });
         return loansPrisma.map((loanPrisma) => Loan.from(loanPrisma));

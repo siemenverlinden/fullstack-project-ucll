@@ -4,27 +4,30 @@ import {User} from "../model/user";
 type Role = 'admin' | 'member' | 'buyer';
 
 type UserInput = {
-    userId?: string;
+    id?: string;
     email: string;
     password: string;
     createdAt: Date;
 }
 
 type BookInput = {
-    bookId?: string;
+    id?: string;
     title: string;
-    description: string;
-    authors: string[];
+    authors: string;
     isbn: string;
-    copiesCount?: number;
+    copies: number;
 
 }
 type LoanInput = {
-    loanId?: string;
+    id?: string;
     book: BookInput;
     user: UserInput;
     borrowDate: Date;
     returnDate: Date;
+}
+type BookCopyInput= {
+    id?: string;
+    book: BookInput;
 }
 export {
     Role,

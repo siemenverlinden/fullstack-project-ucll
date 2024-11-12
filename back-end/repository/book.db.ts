@@ -16,13 +16,17 @@ const getAllBooks = async (): Promise<Book[]> => {
     }
 };
 
-const getBookById = async (bookId: string): Promise<Book | null> => {
+const getBookById = async ({ id }: { id: string | undefined }): Promise<Book | null> => {
+
+    if(id === undefined){
+        throw new Error('Book id is undefined');
+    }
+
     try {
         const bookPrisma = await database.book.findUnique({
-            where: {
-                bookId
-            }
+            where: { id },
         });
+
         return bookPrisma ? Book.from(bookPrisma) : null;
     } catch (error) {
         console.error(error);
@@ -31,7 +35,26 @@ const getBookById = async (bookId: string): Promise<Book | null> => {
 }
 
 
+const createBook = async (book: Book): Promise<Book> => {
+    try {
+        const bookPrisma = await database.book.create({
+           data: {
+                title: book.getTitle(),
+                authors: book.getAuthors(),
+                isbn: book.getIsbn(),
+            },
+        });
+
+        return Book.from(bookPrisma);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
+
 export default {
     getAllBooks,
+    createBook,
     getBookById
 };

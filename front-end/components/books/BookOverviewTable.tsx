@@ -1,7 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Book} from "@types";
 import Link from "next/link";
-
 type Props = {
     books: Array<Book>;
 };
@@ -9,6 +8,13 @@ type Props = {
 const BooksOverviewTable: React.FC<Props> = ({
     books,
 }: Props) => {
+
+    const [loggedInUser, setLoggedInUser] = useState<String>(null);
+
+    useEffect(() => {
+        setLoggedInUser(sessionStorage.getItem("loggedInUser"));
+    }, []);
+
     return (
         <>
             {books && (
@@ -17,22 +23,22 @@ const BooksOverviewTable: React.FC<Props> = ({
                     <tr>
                         <th>Titel</th>
                         <th>Auteur</th>
-                        <th>Aantal exemplaren</th>
-                        <th>Acties</th>
+                        {loggedInUser && (
+                            <th>Acties</th>
+                        )}
                     </tr>
                     </thead>
                     <tbody>
                     {books.map((book) => (
-                        <tr key={book.bookId}>
+                        <tr key={book.id}>
                             <td>{book.title}</td>
                             <td>{book.authors}</td>
-                            <td>{book.copiesCount}</td>
-                            <td>
-                                <Link href={`/books/edit/${book.bookId}`} className="btn btn-warning btn-sm me-2">
-                                    Bewerken
+                            {loggedInUser && (  <td>
+                                <Link href={`/books/${book.id}`} className="btn btn-primary btn-sm me-2">
+                                    Bekijken
                                 </Link>
-                                <button className="btn btn-danger btn-sm">Verwijderen</button>
                             </td>
+                            )}
                         </tr>
                     ))}
                     </tbody>

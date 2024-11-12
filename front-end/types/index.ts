@@ -1,13 +1,22 @@
 export type Book = {
-    bookId: string;
+    id?: string;
     title: string;
-    description: string;
-    authors: String[];
+    authors: String;
     isbn: string;
-    copiesCount: number;
+    copies: number;
+};
+
+export type BookCopy = {
+    id: string;
+    book: Book;
 };
 
 export type User = {
-    userId: string;
+    id: string;
     email: string;
 }
+
+export type StatusMessage = {
+    message: string;
+    type: "error" | "success";
+};

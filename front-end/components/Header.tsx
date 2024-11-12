@@ -1,7 +1,19 @@
 import React from 'react';
 import Link from "next/link";
-
+import { useEffect, useState } from "react";
 const Header: React.FC = () => {
+    const [loggedInUser, setLoggedInUser] = useState<String>(null);
+
+    useEffect(() => {
+        setLoggedInUser(sessionStorage.getItem("loggedInUser"));
+    }, []);
+
+    const handleClick = () => {
+        sessionStorage.removeItem("loggedInUser");
+        setLoggedInUser(null);
+
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
@@ -26,21 +38,34 @@ const Header: React.FC = () => {
                                 Boeken
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link href="/users" className="nav-link">
+                        {loggedInUser && (
+                            <li className="nav-item">
+                             <Link href="/users" className="nav-link">
                                 Leden
                             </Link>
                         </li>
+                            )}
+                        {loggedInUser && (
                         <li className="nav-item">
                             <Link href="/loans" className="nav-link">
                                 Uitleningen
                             </Link>
                         </li>
+                        )}
+                        {!loggedInUser && (
                         <li className="nav-item">
                             <Link href="/login" className="nav-link">
                                 Inloggen
                             </Link>
                         </li>
+                        )}
+                        {loggedInUser && (
+                            <li className="nav-item">
+                            <Link href="/users" onClick={handleClick} className="nav-link">
+                                Logout
+                            </Link>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>
