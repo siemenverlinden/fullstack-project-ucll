@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {BookCopy} from "@types";
 import Link from "next/link";
+import LoanService from "@services/LoanService";
 type Props = {
     bookCopiesAvailable: BookCopy[];
 };
+
+const loanBookCopy = async (bookCopy: BookCopy) => {
+    await LoanService.loanBookCopy(bookCopy);
+}
+
 const BookCopyAvailable: React.FC<Props> = ({
                                                 bookCopiesAvailable
 }: Props) => {
+    // @ts-ignore
     const [loggedInUser, setLoggedInUser] = useState<String>(null);
     useEffect(() => {
         // @ts-ignore
@@ -35,8 +42,8 @@ const BookCopyAvailable: React.FC<Props> = ({
                         <td>{bookCopy.id}</td>
                         <td>{bookCopy.book.title}</td>
                         <td>
-                            <button type="button" className="btn btn-success">
-                                Available
+                            <button type="button" className="btn btn-success"   onClick={() => loanBookCopy(bookCopy)}>
+                                Uitlenen
                             </button>
 
                         </td>

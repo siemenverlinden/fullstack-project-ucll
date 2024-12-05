@@ -1,10 +1,10 @@
-// Execute: npx ts-node util/seed.ts
+// Execute:
+//  npx prisma migrate dev
+//  npx ts-node util/seed.ts
 
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { set } from 'date-fns';
-import {create} from "node:domain";
-import {v4 as uuidv4} from "uuid";
+
 
 const prisma = new PrismaClient();
 
@@ -16,62 +16,81 @@ const main = async () => {
 
     const user = await prisma.user.create({
         data: {
-            password: "user",
+            password: await bcrypt.hash('user123', 12),
             email: 'user@example.com',
-            phone: '0612345678',
+            role: 'user',
         },
     });
 
     const adminUser = await prisma.user.create({
         data: {
-            password: "admin",
+            password: await bcrypt.hash('admin123', 12),
             email: 'admin@example.com',
-            phone: '0612345678',
-            admin: true
+            role: 'admin',
         },
      });
 
-
-
-    const book1 = await prisma.book.create({
-        data: {
+    const books = [
+        {
             title: 'De Ontdekking van de Hemel',
             authors: 'Harry Mulisch',
             isbn: '9789023469154',
         },
-    });
-
-
-
-    const book2 = await prisma.book.create({
-        data: {
+        {
             title: 'Het Diner',
             authors: 'Herman Koch',
-            isbn: '9789025433511',
+            isbn: '9789023457243',
         },
-    });
+        {
+            title: 'De Brief voor de Koning',
+            authors: 'Tonke Dragt',
+            isbn: '9789025317026',
+        },
+        {
+            title: 'Max Havelaar',
+            authors: 'Multatuli',
+            isbn: '9789028240307',
+        },
+        {
+            title: 'De Aanslag',
+            authors: 'Harry Mulisch',
+            isbn: '9789023428878',
+        },
+    ];
 
-    const bookCopy1 = await prisma.bookCopy.create({
-        data: {
-            book: {
-                connect: {
-                    id: book1.id,
-                },
+    for (const book of books) {
+        const createdBook = await prisma.book.create({
+            data: {
+                title: book.title,
+                authors: book.authors,
+                isbn: book.isbn,
             },
-            loan: {
-                create: {
-                    borrowDate: new Date(),
-                    dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
-                    user: {
+        });
+
+        for (let i = 0; i < 3; i++) {
+            await prisma.bookCopy.create({
+                data: {
+                    book: {
                         connect: {
-                            id: user.id,
+                            id: createdBook.id,
                         },
                     },
-            }
-        },
-        },
-    });
-    
+                    loan: {
+                        create: {
+                            borrowDate: new Date(),
+                            dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
+                            user: {
+                                connect: {
+                                    id: user.id, // Vervang 'user.id' met een geldige gebruiker-ID
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+        }
+    }
+
 
 };
 

@@ -31,13 +31,6 @@ const createBook = async (book: BookInput): Promise<Book> => {
    if(NewBook.getId() === undefined){
          throw new Error('Book not created');
    }
-const createdBook = await bookDb.getBookById({id: NewBook.getId()});
-
-if(createdBook === null){
-    throw new Error('Book not found');
-}
-    await bookCopyDb.createBookCopy(createdBook,book.copies);
-
     return newBook;
 
 }

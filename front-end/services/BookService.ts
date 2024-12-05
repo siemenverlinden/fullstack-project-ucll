@@ -1,5 +1,10 @@
 import { Book } from "@types";
 
+const getToken = (): string => {
+    const loggedInUserString = sessionStorage.getItem('loggedInUser');
+    return loggedInUserString ? JSON.parse(loggedInUserString).token : '';
+};
+
 const getAllBooks = () => {
   //  const token = JSON.parse(sessionStorage.getItem("loggedInUser"))?.token;
 console.log(process.env.NEXT_PUBLIC_API_URL)
@@ -7,12 +12,22 @@ console.log(process.env.NEXT_PUBLIC_API_URL)
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-       //     Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${getToken()}`,
         },
     });
 };
 
 
+const createBookCopy = (book: Book) => {
+
+    return fetch(process.env.NEXT_PUBLIC_API_URL + "/books/" + book.id + "/copy", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    });
+}
 const createBook = (book: { copies: string; isbn: string; title: string; authors: string }) => {
   //  const token = JSON.parse(sessionStorage.getItem("loggedInUser"))?.token;
 
@@ -21,7 +36,7 @@ const createBook = (book: { copies: string; isbn: string; title: string; authors
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-         //   Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify(book),
     });
@@ -34,7 +49,7 @@ const getBookById = (id: string) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-             //   Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${getToken()}`,
             },
         });
 }
@@ -45,7 +60,7 @@ const getBookCopiesAvailable = (id: string) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-             //   Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${getToken()}`,
             },
         });
 }
@@ -56,7 +71,7 @@ const getBookCopiesLoaned = (id: string) => {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            //   Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${getToken()}`,
         },
     });
 }
@@ -65,7 +80,8 @@ const BookService = {
     createBook,
     getBookById,
     getBookCopiesAvailable,
-    getBookCopiesLoaned
+    getBookCopiesLoaned,
+    createBookCopy
 };
 
 export default BookService;

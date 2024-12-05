@@ -6,13 +6,7 @@ import Head from "next/head";
 import UserLoginForm from "@components/users/UserLoginForm";
 
 const LoginPage: React.FC = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Voeg authenticatielogica toe
-    };
 
     return (
         <>
@@ -26,8 +20,8 @@ const LoginPage: React.FC = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Header/>
-            <main className="container mt-4">
-                <UserLoginForm />
+            <main className="container mt-4 text-center ">
+                <UserLoginForm/>
             </main>
         </>
     );

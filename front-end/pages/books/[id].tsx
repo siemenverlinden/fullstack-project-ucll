@@ -13,11 +13,12 @@ import BookDetail from "@components/books/view/BookDetail";
 import BookCopyLoaned from "@components/books/view/BookCopyLoaned";
 import BookCopyAvailable from "@components/books/view/BookCopyAvailable";
 import useSWR from "swr";
+import useInterval from 'use-interval';
+
 const ViewBook: React.FC = () => {
 
     const router = useRouter();
     const { id } = router.query;
-    // const [Error: String, setError] = useState<Book>();
 
 
     const fetcher = async (key: string) => {
@@ -45,15 +46,20 @@ const ViewBook: React.FC = () => {
                 bookCopyAvailableResponse.json(),
                 bookCopyLoanedResponse.json(),
             ]);
+
             return { book, copyAvailable, copyLoaned };
         }
     };
 
-
     const { data, isLoading, error } = useSWR(id ? `bookCopies-${id}` : null, fetcher);
+
+    useInterval(() => {
+        const { data, isLoading, error } = useSWR(id ? `bookCopies-${id}` : null, fetcher);
+    }, 1000);
 
     if (!id || isLoading) return <p>Loading...</p>;
     if (error) return <p>Error loading data</p>;
+
 
 
     return (

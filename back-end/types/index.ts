@@ -1,13 +1,10 @@
-import {Book} from "../model/book";
-import {User} from "../model/user";
-
-type Role = 'admin' | 'member' | 'buyer';
+type Role = 'admin' | 'user';
 
 type UserInput = {
-    id?: string;
+    id? : string;
     email: string;
     password: string;
-    createdAt: Date;
+    role: Role;
 }
 
 type BookInput = {
@@ -20,7 +17,7 @@ type BookInput = {
 }
 type LoanInput = {
     id?: string;
-    book: BookInput;
+    bookCopy: BookCopyInput;
     user: UserInput;
     borrowDate: Date;
     returnDate: Date;
@@ -29,9 +26,19 @@ type BookCopyInput= {
     id?: string;
     book: BookInput;
 }
+
+type AuthenticationResponse = {
+    id: string;
+    token: string;
+    email: string;
+    role: Role;
+};
+
 export {
     Role,
     UserInput,
     BookInput,
-    LoanInput
+    LoanInput,
+    AuthenticationResponse,
+    BookCopyInput
 };

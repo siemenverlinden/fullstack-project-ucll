@@ -54,6 +54,7 @@ bookRouter.get('/:id/copies/available', async (req: Request, res: Response, next
         const book = await bookCopyService.getAvailableCopiesByBookId(String(req.params.id));
         res.status(200).json(book);
     } catch (error) {
+
         next(error);
     }
 });
@@ -61,6 +62,15 @@ bookRouter.get('/:id/copies/available', async (req: Request, res: Response, next
 bookRouter.get('/:id/copies/loaned', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const book = await bookCopyService.getLoanedCopiesByBookId(String(req.params.id));
+        res.status(200).json(book);
+    } catch (error) {
+        next(error);
+    }
+});
+
+bookRouter.post('/:id/copy', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const book = await bookCopyService.createBookCopy(String(req.params.id));
         res.status(200).json(book);
     } catch (error) {
         next(error);

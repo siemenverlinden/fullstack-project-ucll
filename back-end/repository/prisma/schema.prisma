@@ -8,24 +8,22 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  admin     Boolean  @default(false)
-  loans     Loan[]
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  role     String
+  loans    Loan[]
 }
 
 model Loan {
-  id         String    @id @default(uuid())
+  id         String   @id @default(uuid())
   userId     String
-  borrowDate DateTime  @default(now())
+  borrowDate DateTime @default(now())
   dueDate    DateTime
-  returnDate DateTime?
-  bookCopyId String    @unique
+  bookCopyId String   @unique
   // Relaties
-  bookCopy   BookCopy  @relation(fields: [bookCopyId], references: [id])
-  user       User      @relation(fields: [userId], references: [id])
+  bookCopy   BookCopy @relation(fields: [bookCopyId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model Book {

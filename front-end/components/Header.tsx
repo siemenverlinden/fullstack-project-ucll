@@ -1,11 +1,15 @@
 import React from 'react';
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import {User} from "@types";
 const Header: React.FC = () => {
-    const [loggedInUser, setLoggedInUser] = useState<String>(null);
+    const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
     useEffect(() => {
-        setLoggedInUser(sessionStorage.getItem("loggedInUser"));
+        const loggedInUserString = sessionStorage.getItem('loggedInUser');
+        if (loggedInUserString !== null) {
+            setLoggedInUser(JSON.parse(loggedInUserString));
+        }
     }, []);
 
     const handleClick = () => {
@@ -14,10 +18,18 @@ const Header: React.FC = () => {
 
     };
 
+   const getCcsClassBasedOnUser = () => {
+        if (loggedInUser && loggedInUser.role === "admin") {
+            return "bg-primary";
+        } else {
+            return "bg-dark";
+        }
+   }
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <>
+            <nav className={`navbar navbar-expand-lg navbar-dark ${getCcsClassBasedOnUser()}`}>
             <div className="container">
-                <Link href="/"  className="navbar-brand">
+                <Link href="/" className="navbar-brand">
                     Bibliotheca
                 </Link>
                 <button
@@ -40,36 +52,38 @@ const Header: React.FC = () => {
                         </li>
                         {loggedInUser && (
                             <li className="nav-item">
-                             <Link href="/users" className="nav-link">
-                                Leden
-                            </Link>
-                        </li>
-                            )}
-                        {loggedInUser && (
-                        <li className="nav-item">
-                            <Link href="/loans" className="nav-link">
-                                Uitleningen
-                            </Link>
-                        </li>
-                        )}
-                        {!loggedInUser && (
-                        <li className="nav-item">
-                            <Link href="/login" className="nav-link">
-                                Inloggen
-                            </Link>
-                        </li>
+                                <Link href="/users" className="nav-link">
+                                    Leden
+                                </Link>
+                            </li>
                         )}
                         {loggedInUser && (
                             <li className="nav-item">
-                            <Link href="/users" onClick={handleClick} className="nav-link">
-                                Logout
-                            </Link>
+                                <Link href="/loans" className="nav-link">
+                                    Uitleningen
+                                </Link>
+                            </li>
+                        )}
+                        {!loggedInUser && (
+                            <li className="nav-item">
+                                <Link href="/login" className="nav-link">
+                                    Inloggen
+                                </Link>
+                            </li>
+                        )}
+                        {loggedInUser && (
+                            <li className="nav-item">
+                                <Link href="/users" onClick={handleClick} className="nav-link">
+                                    Logout
+                                </Link>
                             </li>
                         )}
                     </ul>
                 </div>
             </div>
-        </nav>
+            </nav>
+        </>
+
     );
 };
 

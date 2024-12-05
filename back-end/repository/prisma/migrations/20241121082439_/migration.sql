@@ -3,9 +3,7 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "admin" BOOLEAN NOT NULL DEFAULT false,
+    "role" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -16,7 +14,6 @@ CREATE TABLE "Loan" (
     "userId" TEXT NOT NULL,
     "borrowDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dueDate" TIMESTAMP(3) NOT NULL,
-    "returnDate" TIMESTAMP(3),
     "bookCopyId" TEXT NOT NULL,
 
     CONSTRAINT "Loan_pkey" PRIMARY KEY ("id")

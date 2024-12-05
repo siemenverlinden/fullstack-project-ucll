@@ -6,25 +6,25 @@ export class User {
     private id?: string;
     private email: string;
     private password: string;
-    private createdAt: Date;
-
+    private role: Role;
     constructor(user: {
         id?: string;
         email: string;
         password: string;
-        createdAt: Date;
+        role: Role;
     }) {
         this.validate(user);
 
         this.id = user.id;
         this.email = user.email;
         this.password = user.password;
-        this.createdAt = user.createdAt;
+        this.role = user.role;
     }
 
     validate(user: {
         email: string;
         password: string;
+        role: Role;
     }) {
         if (!user.email.trim()) {
             throw new Error('Email is required');
@@ -32,12 +32,12 @@ export class User {
         if (!user.password.trim()) {
             throw new Error('Password is required');
         }
+        if (!user.role.trim()) {
+            throw new Error('Role is required');
+        }
 
     }
 
-    getCreatedAt(): Date {
-        return this.createdAt;
-    }
     getId(): string | undefined {
         return this.id;
     }
@@ -48,28 +48,29 @@ export class User {
         return this.password;
     }
 
-    setPassword(password: string) {
-        this.password = password;
+
+    getRole(): Role {
+        return this.role;
     }
     equals(user: User): boolean {
         return (
             this.id === user.getId() &&
             this.email === user.getEmail() &&
             this.password === user.getPassword() &&
-            this.createdAt === user.getCreatedAt()
+            this.role === user.getRole()
         );
     }
     static from({
         id,
         email,
         password,
-        createdAt,
+        role,
     }: UserPrisma) {
         return new User({
             id,
             email,
             password,
-            createdAt,
+            role: role as Role,
         });
 
                 }

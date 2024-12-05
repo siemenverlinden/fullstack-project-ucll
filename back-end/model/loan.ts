@@ -9,24 +9,28 @@ import {
 
 
 export class Loan {
-    private id?: string;
+    id?: string;
     private bookCopy: BookCopy;
-    private user: User;
+    user: User;
     private borrowDate: Date;
-    private returnDate?: Date;
+    private dueDate: Date ;
 
     constructor(loan: {
         id?: string;
         bookCopy: BookCopy;
         user: User;
         borrowDate: Date;
-        returnDate?: Date;
+        dueDate: Date;
     }) {
         this.id = loan.id;
         this.bookCopy = loan.bookCopy;
         this.user = loan.user;
         this.borrowDate = loan.borrowDate;
-        this.returnDate = loan.returnDate;
+        this.dueDate = loan.dueDate;
+    }
+
+    getDueDate(): Date {
+        return this.dueDate;
     }
 
     // Getter-methoden
@@ -46,9 +50,7 @@ export class Loan {
         return this.borrowDate;
     }
 
-    getReturnDate(): Date | undefined {
-        return this.returnDate;
-    }
+
 
     // Vergelijkingsmethode
     equals(loan: Loan): boolean {
@@ -56,18 +58,17 @@ export class Loan {
             this.id === loan.getId() &&
             this.user.equals(loan.getUser()) &&
             this.bookCopy.equals(loan.getBookCopy()) &&
-            this.borrowDate.getTime() === loan.getBorrowDate().getTime() &&
-            ((this.returnDate && loan.getReturnDate() && this.returnDate.getTime() === loan.getReturnDate()!.getTime()) ||
-                (!this.returnDate && !loan.getReturnDate()))
+            this.borrowDate.getTime() === loan.getBorrowDate().getTime()
         );
     }
 
-    static from({ id, bookCopy, user, borrowDate }: LoanPrisma & { user: UserPrisma, bookCopy: BookCopyPrisma & { book: BooksPrisma }  }) {
+    static from({ id, bookCopy, user, borrowDate, dueDate }: LoanPrisma & { user: UserPrisma, bookCopy: BookCopyPrisma & { book: BooksPrisma }  }) {
         return new Loan({
             id,
             bookCopy: BookCopy.from(bookCopy),
             user: User.from(user),
             borrowDate,
+            dueDate: dueDate
         });
 
     }
