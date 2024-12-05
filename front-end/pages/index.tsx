@@ -18,7 +18,9 @@ const Home: React.FC = () => {
             <main className="container mt-4">
                 <h1 className="text-center">Welkom bij Bibliotheca</h1>
                 <p className="text-center">Beheer je bibliotheek eenvoudig en efficiënt.</p>
-
+                <h1 className="text-3xl font-bold underline">
+                    Hello world!
+                </h1>
                 <form className="form-signin">
                     <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
                          alt="" width="72" height="72"/>
