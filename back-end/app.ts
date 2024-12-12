@@ -8,8 +8,22 @@ import {loanRouter} from "./controller/loan.routes";
 import {bookRouter} from "./controller/book.routes";
 import {userRouter} from "./controller/user.routes";
 import {expressjwt} from "express-jwt";
+import helmet from 'helmet';
 
 const app = express();
+
+app.use(helmet());
+
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            // Allow connections to own server
+            connectSrc: ["'self'"],
+        },
+    })
+);
+
+
 dotenv.config();
 const port = process.env.APP_PORT || 3000;
 

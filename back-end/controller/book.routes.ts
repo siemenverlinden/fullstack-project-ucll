@@ -49,7 +49,7 @@ const bookRouter = express.Router();
  *         isbn:
  *           type: string
  *           description: The ISBN of the book.
- *           example: "978-3-16-148410-0"
+ *           example: "9783161484100"
  *         publishedDate:
  *           type: string
  *           format: date
