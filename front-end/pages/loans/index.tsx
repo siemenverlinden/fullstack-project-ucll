@@ -69,7 +69,7 @@ const LoansPage: React.FC = () => {
                     <link rel="icon" href="/favicon.ico"/>
                 </Head>
                 <Header/>
-                <main className="container mt-4">
+                <main className="contain mt-4 ">
                     <h2>Uitleningen</h2>
                     {error && <div className="text-red-800">{error}</div>}
                     {loans && (

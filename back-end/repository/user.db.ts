@@ -48,6 +48,24 @@ const getUserByEmail = async (email: string): Promise<User | null> => {
         throw new Error('Database error. See server log for details.');
     }
 }
+const update = async (user: User): Promise<User> => {
+    try {
+        const userPrisma = await database.user.update({
+            where: {
+                id: user.getId(),
+            },
+            data: {
+                email: user.getEmail(),
+                password: user.getPassword(),
+                role: user.getRole(),
+            },
+        });
+        return User.from(userPrisma);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
 const createUser = async (user: User): Promise<User> => {
     try {
         const userPrisma = await database.user.create({
@@ -63,9 +81,23 @@ const createUser = async (user: User): Promise<User> => {
         throw new Error('Database error. See server log for details.');
     }
 }
+const deleteUser = async (id: string): Promise<void> => {
+    try {
+        await database.user.delete({
+            where: {
+                id: id,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
 export default {
     getAllUsers,
     createUser,
     getUserByEmail,
-    getUserById
+    getUserById,
+    update,
+    deleteUser
 }

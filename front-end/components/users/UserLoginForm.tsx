@@ -36,6 +36,7 @@ const UserLoginForm: React.FC = () => {
     };
 
     const handleSubmit = async (event: { preventDefault: () => void }) => {
+
         event.preventDefault();
 
         clearErrors();
@@ -98,39 +99,99 @@ const UserLoginForm: React.FC = () => {
                     {statusMessage.type === "success"}
                 </div>
             )}
+            <div className="card w-96 bg-base-100 border m-auto">
+                <div className="card-body">
+                    <h2 className="card-title text-2xl font-bold mb-6">Login</h2>
+                    <Link key="register" href="/register"/>
+                    <form className="form-signin" onSubmit={handleSubmit}>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                                     className="w-4 h-4 opacity-70">
+                                    <path
+                                        d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"/>
+                                    <path
+                                        d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"/>
+                                </svg>
+                                <input id="mailInput" type="email" className="grow" value={email} placeholder="email@example.com"
+                                       onChange={(event) => setEmail(event.target.value)}/>
+                                {emailError && (
+                                    <div className="label">
+                                    <span className="label-text-alt text-red-800">{emailError}</span>
+                                    </div>
+                                )}
 
-            <form className="form-signin" onSubmit={handleSubmit}>
-                <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-                     alt="" width="72" height="72"/>
-                <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-                <div className="block mb-2 text-sm font-medium">
-                    <input
-                        className="form-control"
-                        id="mailInput"
-                        type="email"
-                        value={email}
-                        placeholder={"Email"}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
-                    {emailError && <div className="text-red-800">{emailError}</div>}
-                    <input
-                        className="form-control"
-                        id="passwordInput"
-                        type="password"
-                        value={password}
-                        placeholder={"Password"}
-                        onChange={(event) => setPassword(event.target.value)}
-                    />
-                    {passwordError && (
-                        <div className="text-red-800">{passwordError}</div>
-                    )}
+                            </label>
+                        </div>
+                        <div className="form-control mt-4">
+                            <label className="label">
+                            <span className="label-text">Password</span>
+                            </label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                                     className="w-4 h-4 opacity-70">
+                                    <path fill-rule="evenodd"
+                                          d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                                <input value={password} type="password" className="grow" placeholder="Enter password"  id="passwordInput"  onChange={(event) => setPassword(event.target.value)}/>
+                                {passwordError && (
+                                    <div className="label">
+                                        <span className="label-text-alt text-red-800">{passwordError}</span>
+                                    </div>
+                                )}
+                            </label>
+
+                        </div>
+                        <div className="form-control mt-6">
+                            <button type={"submit"} className="btn btn-primary">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                    <div className="divider">OR</div>
+                    <div className="text-center">
+                        <p>Don't have an account?</p>
+                        <a href="#" className="link link-primary">Sign up now</a>
+                    </div>
                 </div>
+            </div>
+            {/*<form className="form-signin" onSubmit={handleSubmit}>*/}
+            {/*    <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"*/}
+            {/*         alt="" width="72" height="72"/>*/}
+            {/*    <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>*/}
 
-                <button type="submit" className="btn btn-lg btn-primary btn-block">
-                    Inloggen
-                </button>
-            </form>
+            {/*    <div className="block mb-2 text-sm font-medium">*/}
+            {/*        <input*/}
+            {/*            className="form-control"*/}
+            {/*            id="mailInput"*/}
+            {/*            type="email"*/}
+            {/*            value={email}*/}
+            {/*            placeholder={"Email"}*/}
+            {/*            onChange={(event) => setEmail(event.target.value)}*/}
+            {/*        />*/}
+            {/*        {emailError && <div className="text-red-800">{emailError}</div>}*/}
+            {/*        <input*/}
+            {/*            className="form-control"*/}
+            {/*            id="passwordInput"*/}
+            {/*            type="password"*/}
+            {/*            value={password}*/}
+            {/*            placeholder={"Password"}*/}
+            {/*            onChange={(event) => setPassword(event.target.value)}*/}
+            {/*        />*/}
+            {/*        {passwordError && (*/}
+            {/*            <div className="text-red-800">{passwordError}</div>*/}
+            {/*        )}*/}
+            {/*    </div>*/}
+
+            {/*    <button type="submit" className="btn btn-lg btn-primary btn-block">*/}
+            {/*        Inloggen*/}
+            {/*    </button>*/}
+            {/*</form>*/}
 
             <div className="debug-login">
                 <br/>
@@ -138,7 +199,7 @@ const UserLoginForm: React.FC = () => {
                 <table className="table small">
                     <thead>
                     <tr>
-                    <th scope="col">Email</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Role</th>
                     </tr>
                     </thead>
@@ -147,7 +208,7 @@ const UserLoginForm: React.FC = () => {
                         <tr
                             key={index}
                             onClick={() => handleRowClick(row.email, row.password)}
-                            style={{ cursor: "pointer" }}
+                            style={{cursor: "pointer"}}
                         >
                             <th scope="row">{row.email}</th>
                             <td>{row.role}</td>

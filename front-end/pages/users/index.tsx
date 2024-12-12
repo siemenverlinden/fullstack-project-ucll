@@ -51,9 +51,6 @@ const UsersPage: React.FC = () => {
             <Header/>
             <main className="container mt-4">
                 <h2>Leden</h2>
-                <Link href="/front-end/pages/users/add" className="btn btn-success mb-3">
-                    Nieuw Lid Toevoegen
-                </Link>
                 <section>
                     {error && <div className="text-red-800">{error}</div>}
                     {users && (

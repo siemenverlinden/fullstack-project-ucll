@@ -25,7 +25,7 @@ export type Loan = {
     bookCopy: BookCopy;
     user: User;
     loanDate: Date;
-    returnDate: Date;
+    dueDate: Date;
 }
 export type StatusMessage = {
     message: string;

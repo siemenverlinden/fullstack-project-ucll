@@ -15,7 +15,9 @@ const BooksPage: React.FC = () => {
     const [books, setBooks] = useState<Array<Book>>();
     const [error, setError] = useState<string>();
 
-    
+
+
+
     const getBooks = async () => {
         setError("");
         const response = await BookService.getAllBooks();
@@ -48,7 +50,7 @@ const BooksPage: React.FC = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Header/>
-            <main className="container mt-4">
+            <main className="container mt-4 max-w-screen-xl m-auto">
                 <h2>Boeken</h2>
                <AddBookButton />
                 <section>

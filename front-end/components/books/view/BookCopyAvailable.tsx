@@ -16,6 +16,7 @@ const BookCopyAvailable: React.FC<Props> = ({
     // @ts-ignore
     const [loggedInUser, setLoggedInUser] = useState<String>(null);
     useEffect(() => {
+        console.log(bookCopiesAvailable)
         // @ts-ignore
         return setLoggedInUser(sessionStorage.getItem("loggedInUser"));
     }, []);
@@ -26,33 +27,25 @@ const BookCopyAvailable: React.FC<Props> = ({
 
     return (
         <div>
-            {bookCopiesAvailable.length > 0 && (
-            <table className="table table-striped">
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Title</th>
-                    <th>Status</th>
 
-                </tr>
-                </thead>
-                <tbody>
-                {bookCopiesAvailable.map((bookCopy) => (
-                    <tr key={bookCopy.id}>
-                        <td>{bookCopy.id}</td>
-                        <td>{bookCopy.book.title}</td>
-                        <td>
-                            <button type="button" className="btn btn-success"   onClick={() => loanBookCopy(bookCopy)}>
-                                Uitlenen
-                            </button>
+                <div className={"flex items-end"}>
+                <div className=" flex-col stats shadow">
+                    <div className="stat">
+                        <div className="stat-title">Beschikbare examplaren</div>
+                        <div className="stat-value text-center">{bookCopiesAvailable.length}</div>
+                    </div>
+                </div>
 
-                        </td>
-
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-                )}
+                    {loggedInUser && bookCopiesAvailable.length && bookCopiesAvailable[0] && (
+                        <button
+                            type="button"
+                            className=" btn btn-success ml-5 "
+                            onClick={() => loanBookCopy(bookCopiesAvailable[0])}
+                        >
+                            Uitlenen
+                        </button>
+                    )}
+                </div>
         </div>
     );
 

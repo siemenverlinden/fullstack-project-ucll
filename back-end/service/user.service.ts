@@ -12,15 +12,31 @@ const createUser = async ({
     role
 }:UserInput): Promise<User> => {
     const existingUser = await usersDb.getUserByEmail(email);
-
     if (existingUser) {
         throw new Error('User already exists');
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    const user = new User({ email, password: hashedPassword, role: role});
+    const user = new User({ email, password: hashedPassword, role: "user"});
 
     return await usersDb.createUser(user);
+}
+
+const update = async ({
+                              email,
+                              password,
+                              role
+                          }:UserInput): Promise<User> => {
+    const existingUser = await usersDb.getUserByEmail(email);
+
+
+    if (!existingUser) {
+        throw new Error('User does not exists');
+    }
+
+    existingUser.setRole(role);
+
+    return await usersDb.update(existingUser);
 }
 
 const authenticate = async ({ email, password }: UserInput): Promise<{
@@ -57,4 +73,8 @@ const getUserByEmail = async ({ email }: { email: string }): Promise<User> => {
     }
     return user;
 };
-export default {getAllUsers, createUser, getUserByEmail, authenticate};
+const deleteUser = async (id: string): Promise<void> => {
+    return await usersDb.deleteUser(id);
+
+}
+export default {getAllUsers, createUser, getUserByEmail, authenticate, update,deleteUser};

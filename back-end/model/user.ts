@@ -38,6 +38,9 @@ export class User {
 
     }
 
+    setRole(role: Role) {
+        this.role = role;
+    }
     getId(): string | undefined {
         return this.id;
     }

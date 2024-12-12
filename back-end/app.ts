@@ -23,7 +23,7 @@ app.use(
         secret: process.env.JWT_SECRET || 'default_secret',
         algorithms: ['HS256'],
     }).unless({
-        path: ['/api-docs', /^\/api-docs\/.*/, '/users/login', '/users/signup', '/status'],
+        path: ['/api-docs', /^\/api-docs\/.*/, '/users/login', '/users/signup', '/status','/books', "/users",  /^\/books\/[a-f0-9\-]+\/copies\/available$/],
     })
 );
 
@@ -36,6 +36,20 @@ app.use('/users', userRouter);
 app.get('/status', (req, res) => {
     res.json({ message: 'Back-end is running...' });
 });
+
+
+const swaggerOpts = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Bibliotheca API',
+            version: '1.0.0',
+        },
+    },
+    apis: ['./controller/*.routes.ts'],
+};
+const swaggerSpec = swaggerJSDoc(swaggerOpts);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err.name === 'UnauthorizedError') {

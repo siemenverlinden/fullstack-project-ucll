@@ -92,6 +92,63 @@ const AddBook: React.FC<Props> = () => {
 
     return (
         <>
+            <div className="card w-96 bg-base-100 border m-auto">
+                <div className="card-body">
+                    <h2 className="card-title text-2xl font-bold mb-6">Nieuw book</h2>
+                    <form>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Title</span>
+                            </label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <input type="title" className="grow"   value={title} onChange={(e) => setTitle(e.target.value)}/>
+                            </label>
+                        </div>
+                        <div className="form-control mt-4">
+                            <label className="label">
+                                <span className="label-text">Auteur</span>
+                            </label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <input type="authors" className="grow"
+                                       value={authors}
+                                       onChange={(e) => setAuthors(e.target.value)}
+                                />
+                            </label>
+                        </div>
+                        <div className="form-control mt-4">
+                            <label className="label">
+                                <span className="label-text">ISBN</span>
+                            </label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <input type="isbn" className="grow"
+                                       value={isbn}
+                                       onChange={(e) => setIsbn(e.target.value)}/>
+                            </label>
+                        </div>
+                        <div className="form-control mt-4">
+                            <label className="label">
+                                <span className="label-text">Aantal exemplaren</span>
+                            </label>
+                            <label className="input input-bordered flex items-center gap-2">
+                                <input
+                                    type="number"
+                                    className="form-control grow"
+                                    id="copies"
+                                    min="1"
+                                    value={copies}
+                                    onChange={(e) => setCopies(parseInt(e.target.value))}
+                                />
+                            </label>
+                        </div>
+                        <div className="form-control mt-6">
+                            <button className="btn btn-primary">
+                                Aanmaken
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Titel</label>

@@ -1,5 +1,8 @@
 type Role = 'admin' | 'user';
 
+type DeleteUserInput = {
+    id: string;
+}
 type UserInput = {
     id? : string;
     email: string;
@@ -40,5 +43,6 @@ export {
     BookInput,
     LoanInput,
     AuthenticationResponse,
-    BookCopyInput
+    BookCopyInput,
+    DeleteUserInput
 };
