@@ -48,11 +48,6 @@ export class Book {
     }
 
 
-    /**
-     * Type van de parameter in de from methode veranderen naar any
-     *
-     * @param bookPrisma
-     */
     static from(bookPrisma: any): Book {
         return new Book({
             id: bookPrisma.id,

@@ -1,4 +1,4 @@
-import {BookCopy, Loan, User} from "@types";
+import {BookCopy, Loan} from "@types";
 
 const getToken = (): string => {
     const loggedInUserString = sessionStorage.getItem('loggedInUser');

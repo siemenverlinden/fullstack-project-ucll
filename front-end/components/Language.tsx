@@ -10,7 +10,6 @@ const Language: React.FC = () => {
     const { pathname, asPath, query } = router;
 
     const handleLanguageChange = (newLocale: string) => {
-        console.log(newLocale);
         router.push({ pathname, query }, asPath, { locale: newLocale });
     };
 

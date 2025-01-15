@@ -6,8 +6,7 @@ const generateJwtToken = ({ id, email,role }: { id:string, email: string,role: s
     try {
         return jwt.sign({ id, email,role }, process.env.JWT_SECRET!, options);
     } catch (error) {
-        console.log(error);
-        throw new Error('Error generating JWT token, see server log for details.');
+        throw new Error('Error generating JWT token.');
     }
 };
 

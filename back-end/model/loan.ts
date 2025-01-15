@@ -33,7 +33,6 @@ export class Loan {
         return this.dueDate;
     }
 
-    // Getter-methoden
     getId(): string | undefined {
         return this.id;
     }
@@ -51,8 +50,6 @@ export class Loan {
     }
 
 
-
-    // Vergelijkingsmethode
     equals(loan: Loan): boolean {
         return (
             this.id === loan.getId() &&

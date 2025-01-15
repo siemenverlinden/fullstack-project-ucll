@@ -5,7 +5,7 @@ import BookCopyAvailable from "@components/books/view/BookCopyAvailable";
 
 type Props = {
     books: Array<Book>;
-    loanBookCopy: (bookCopy: BookCopy) => void; // Adding the prop type
+    loanBookCopy: (bookCopy: BookCopy) => void;
 };
 
 const BooksOverviewTable: React.FC<Props> = ({ books, loanBookCopy }: Props) => {
@@ -20,16 +20,14 @@ const BooksOverviewTable: React.FC<Props> = ({ books, loanBookCopy }: Props) => 
         if (selectedBook && selectedBook.id !== undefined) {
             try {
                 const response = await BookService.getBookCopiesAvailable(selectedBook.id);
-                if (!response.ok) {
-                    console.log("wrong response");
-                }
+
                 if (response) {
                     const json = await response.json();
                     setBookCopiesAvailable(json);
                 }
             } catch (error) {
                 console.error("Error fetching book copies:", error);
-                setBookCopiesAvailable([]); // Set an empty list on error
+                setBookCopiesAvailable([]);
             }
         }
     };
@@ -56,7 +54,7 @@ const BooksOverviewTable: React.FC<Props> = ({ books, loanBookCopy }: Props) => 
                         {selectedBook && selectedBook.id === book.id && bookCopiesAvailable && (
                             <BookCopyAvailable
                                 bookCopiesAvailable={bookCopiesAvailable}
-                                loanBookCopy={(bookCopy) => loanBookCopy(bookCopy, fetchBookCopies)} // Pass fetchBookCopies as the callback
+                                loanBookCopy={(bookCopy) => loanBookCopy(bookCopy, fetchBookCopies)}
                             />
                         )}
                     </div>

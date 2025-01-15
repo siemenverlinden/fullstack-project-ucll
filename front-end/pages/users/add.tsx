@@ -1,19 +1,12 @@
-// pages/books/index.tsx
-
-import React, {useState} from 'react';
-import Link from 'next/link';
+import React from 'react';
 import Head from "next/head";
 import Header from "@components/Header";
-import AddBook from "@components/books/AddBook";
 import AddUser from "@components/users/AddUser";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useTranslation} from "next-i18next";
 
 const BooksPage: React.FC = () => {
     const { t } = useTranslation();
-
-
-
 
     return (
         <>
@@ -28,7 +21,7 @@ const BooksPage: React.FC = () => {
                     <link rel="icon" href="/favicon.ico"/>
                 </Head>
                 <Header/>
-                <main className="container mt-4">
+                <main className="container mt-4  m-auto">
                     <h2>{t('app.user.add')}</h2>
                     <AddUser  />
                 </main>

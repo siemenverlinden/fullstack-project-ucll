@@ -1,8 +1,6 @@
-import { Loan } from '../model/loan';
+
 import { Book } from '../model/book';
 import bookDb from '../repository/book.db';
-import membersDb from "../repository/user.db";
-import { v4 as uuidv4 } from 'uuid'; //generate unique id
 
 import { BookInput } from '../types';
 import bookCopyDb from "../repository/bookCopy.db";
@@ -28,7 +26,6 @@ const createBook = async (book: BookInput): Promise<Book> => {
          throw new Error('Book not created');
    }
 
-    // Create copies of the book based on the specified number
     const copies = book.copies;
     for (let i = 0; i < copies; i++) {
             await bookCopyDb.createBookCopy(newId);

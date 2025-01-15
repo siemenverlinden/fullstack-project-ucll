@@ -1,6 +1,5 @@
 import React from "react";
 import { Loan } from "@types";
-import { formatDate } from "../../utils/dateUtils";
 import { useTranslation } from "next-i18next";
 
 type Props = {

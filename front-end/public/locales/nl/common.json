@@ -26,7 +26,8 @@
         "members": "Gebruikers",
         "register": "Registreren",
         "role": "Rol",
-        "delete": "Gebruiker wissen"
+        "delete": "Gebruiker wissen",
+        "loggedout": "U bent uitgelogd."
       },
       "label": {
         "username": "Username:",

@@ -1,14 +1,10 @@
-import {Book, StatusMessage} from "@types";
-import Link from "next/link";
+import { StatusMessage} from "@types";
 import React, { useState } from 'react';
 import BookService from "@services/BookService";
 import {useTranslation} from "next-i18next";
 
-type Props = {
-    books: Array<Book>;
-};
 
-const AddBook: React.FC<Props> = () => {
+const AddBook: React.FC = () => {
 
     const { t } = useTranslation();
     const [title, setTitle] = useState('');
@@ -87,11 +83,11 @@ const AddBook: React.FC<Props> = () => {
             )}
             <div className="card w-96 bg-base-100 border m-auto">
                 <div className="card-body">
-                    <h2 className="card-title text-2xl font-bold mb-6">  {t('app.title')}  {t('app.book.add')}</h2>
+                    <h2 className="card-title text-2xl font-bold mb-6"> {t('book.add')}</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">{t('app.book.title')}</span>
+                                <span className="label-text">{t('book.title')}</span>
                             </label>
                             <label className="input input-bordered flex items-center gap-2">
                                 <input type="title" className="grow"   value={title} onChange={(e) => setTitle(e.target.value)}/>
@@ -99,7 +95,7 @@ const AddBook: React.FC<Props> = () => {
                         </div>
                         <div className="form-control mt-4">
                             <label className="label">
-                                <span className="label-text">{t('app.book.author')}</span>
+                                <span className="label-text">{t('book.author')}</span>
                             </label>
                             <label className="input input-bordered flex items-center gap-2">
                                 <input type="authors" className="grow"
@@ -135,7 +131,7 @@ const AddBook: React.FC<Props> = () => {
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">
-                                {t('app.book.create')}
+                                {t('book.create')}
                             </button>
                         </div>
                     </form>

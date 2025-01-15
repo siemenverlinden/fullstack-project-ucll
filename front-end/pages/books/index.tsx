@@ -36,13 +36,9 @@ const BooksPage: React.FC = () => {
     };
 
     const loanBookCopy = async (bookCopy: BookCopy, refreshBookCopies: () => void) => {
-        try {
             await LoanService.loanBookCopy(bookCopy);
-            await getBooks(); // Reload books
-            refreshBookCopies(); // Refresh book copies
-        } catch (error) {
-            console.error("Error loaning book copy:", error);
-        }
+            await getBooks();
+            refreshBookCopies();
     };
 
     useEffect(() => {
@@ -70,7 +66,7 @@ const BooksPage: React.FC = () => {
                     {books && (
                         <BooksOverviewTable
                             books={books}
-                            loanBookCopy={loanBookCopy} // Passing the function as a prop
+                            loanBookCopy={loanBookCopy}
                         />
                     )}
                 </section>

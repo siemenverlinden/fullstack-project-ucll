@@ -12,7 +12,7 @@ const getAllUsers = async (): Promise<User[]> => {
         return usersPrisma.map((userPrisma  ) => User.from(userPrisma));
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 
@@ -29,7 +29,7 @@ const getUserById = async (id: string): Promise<User | null> => {
         return null;
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error. ');
     }
 }
 const getUserByEmail = async (email: string): Promise<User | null> => {
@@ -45,7 +45,7 @@ const getUserByEmail = async (email: string): Promise<User | null> => {
         return null;
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 const update = async (user: User): Promise<User> => {
@@ -63,7 +63,7 @@ const update = async (user: User): Promise<User> => {
         return User.from(userPrisma);
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 const createUser = async (user: User): Promise<User> => {
@@ -78,11 +78,10 @@ const createUser = async (user: User): Promise<User> => {
         return User.from(userPrisma);
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 const deleteUser = async (id: string): Promise<void> => {
-    console.log(id)
     try {
         await database.user.delete({
             where: {
@@ -91,7 +90,7 @@ const deleteUser = async (id: string): Promise<void> => {
         });
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 export default {

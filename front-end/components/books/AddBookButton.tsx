@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {Book} from "@types";
 import Link from "next/link";
 import {useTranslation} from "next-i18next";
 

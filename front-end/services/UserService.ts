@@ -1,4 +1,4 @@
-import {Book, User} from "@types";
+import { User} from "@types";
 
 const getToken = (): string => {
     const loggedInUserString = sessionStorage.getItem('loggedInUser');
@@ -6,7 +6,6 @@ const getToken = (): string => {
 };
 
 const getAllUsers = () => {
-  //  const token = JSON.parse(sessionStorage.getItem("loggedInUser"))?.token;
     return fetch(process.env.NEXT_PUBLIC_API_URL + "/users", {
         method: "GET",
         headers: {

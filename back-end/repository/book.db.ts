@@ -12,7 +12,7 @@ const getAllBooks = async (): Promise<Book[]> => {
         return booksPrisma.map((bookPrisma) => Book.from(bookPrisma));
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error');
     }
 };
 
@@ -30,7 +30,7 @@ const getBookById = async ({ id }: { id: string | undefined }): Promise<Book | n
         return bookPrisma ? Book.from(bookPrisma) : null;
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error');
     }
 }
 
@@ -48,7 +48,7 @@ const createBook = async (book: Book): Promise<Book> => {
         return Book.from(bookPrisma);
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 };
 

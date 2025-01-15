@@ -1,6 +1,4 @@
-// pages/books/index.tsx
-
-import React, {useState} from 'react';
+import React from 'react';
 import Head from "next/head";
 import Header from "@components/Header";
 import AddBook from "@components/books/AddBook";
@@ -21,8 +19,8 @@ const AddBookPage: React.FC = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Header/>
-            <main className="container mt-4">
-                <h2>{t('app.book.add')}</h2>
+            <main className="container mt-4 m-auto">
+                <h2>{t('book.add')}</h2>
                 <AddBook />
             </main>
         </>

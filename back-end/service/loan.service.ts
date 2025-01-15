@@ -24,7 +24,6 @@ const getAllLoans = async ({
     email: string;
     role: Role;
 }): Promise<Loan[]> => {
-    console.log(role);
     if (role === 'admin') {
         return    loanDb.getAllLoans();
     } else if (role === 'user') {

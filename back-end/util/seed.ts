@@ -81,7 +81,7 @@ const main = async () => {
                             dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
                             user: {
                                 connect: {
-                                    id: user.id, // Vervang 'user.id' met een geldige gebruiker-ID
+                                    id: user.id,
                                 },
                             },
                         },

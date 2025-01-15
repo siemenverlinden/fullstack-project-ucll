@@ -1,6 +1,4 @@
-// pages/login.tsx
-
-import React, { useState } from 'react';
+import React from 'react';
 import Header from "@components/Header";
 import Head from "next/head";
 import UserLoginForm from "@components/users/UserLoginForm";

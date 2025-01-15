@@ -26,7 +26,8 @@
       "members": "Members",
       "register": "Register",
       "role": "Role",
-      "delete": "Delete User"
+      "delete": "Delete User",
+      "loggedout": "You are logged out."
     },
     "label": {
       "username": "Username:",

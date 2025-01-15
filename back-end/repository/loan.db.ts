@@ -14,7 +14,7 @@ const getAllLoans
         return loansPrisma.map((loanPrisma) => Loan.from(loanPrisma));
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 };
 
@@ -32,7 +32,7 @@ const getAllLoansByUserId = async (userId: string): Promise<Loan[]> => {
         return loansPrisma.map((loanPrisma) => Loan.from(loanPrisma));
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 
@@ -53,7 +53,7 @@ const getLoanById = async (id: string): Promise<Loan | null> => {
         return Loan.from(loanPrisma);
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 const deleteLoan = async (id: string): Promise<void> => {
@@ -65,7 +65,7 @@ const deleteLoan = async (id: string): Promise<void> => {
         });
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 
@@ -91,8 +91,7 @@ const createLoan = async (loan: Loan): Promise<Loan> => {
         });
         return Loan.from(loanPrisma);
     } catch (error) {
-        console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database error.');
     }
 }
 export default {

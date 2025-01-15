@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import Head from "next/head";
 import Header from "@components/Header";
 import { Loan, User } from "@types";
@@ -47,10 +46,9 @@ const LoansPage: React.FC = () => {
     const returnBook = async (loan: Loan) => {
         try {
             await LoanService.returnBook(loan);
-            // Refresh the loans list after returning a book
+
             getLoans();
         } catch (error) {
-            console.error('Error returning book:', error);
             setError(t('loan.load_error'));
         }
     };
@@ -74,7 +72,7 @@ const LoansPage: React.FC = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-            <main className="contain mt-4 ">
+            <main className="container mt-4  m-auto">
                 <h2>{t('loan.name')}</h2>
                 {error && <div className="text-red-800">{error}</div>}
                 {loans && (

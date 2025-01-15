@@ -1,5 +1,4 @@
 import { StatusMessage } from "@types";
-import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import UserService from "@services/UserService";

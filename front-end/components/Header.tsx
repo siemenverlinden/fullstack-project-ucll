@@ -2,12 +2,15 @@ import React from 'react';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {User} from "@types";
-import {Button} from "bootstrap";
 import Language from "@components/Language";
 import {useTranslation} from "next-i18next";
+import {useRouter} from "next/router";
 const Header: React.FC = () => {
+
     const { t } = useTranslation();
     const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+    const [logoutNotice, setLogoutNotice] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const loggedInUserString = sessionStorage.getItem('loggedInUser');
@@ -19,7 +22,11 @@ const Header: React.FC = () => {
     const handleClick = () => {
         sessionStorage.removeItem("loggedInUser");
         setLoggedInUser(null);
+        setLogoutNotice(true);
 
+        setTimeout(() => {
+            router.push("/login");
+        }, 2000);
     };
 
    const getCcsClassBasedOnUser = () => {
@@ -34,12 +41,12 @@ const Header: React.FC = () => {
    }
     return (
         <>
-        <div className={`navbar ${getCcsClassBasedOnUser()}`}>
-            <div className="navbar-start">
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
+    <div className={`navbar ${getCcsClassBasedOnUser()}`}>
+        <div className="navbar-start">
+            <div className="dropdown">
+                <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -165,6 +172,15 @@ const Header: React.FC = () => {
 
 
         </div>
+            {logoutNotice && (
+                <div
+                    className="alert alert-success"
+                    role="alert"
+                >
+                    {t('app.user.logout')}
+                </div>
+            )
+            }
 </>
 
 )
