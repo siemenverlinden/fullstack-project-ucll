@@ -1,0 +1,67 @@
+{
+  "app": {
+    "loans": "Loans",
+    "books": "Books",
+    "title": "Welcome to Bibliotheca",
+    "description": "Welcome to the library management program.",
+    "success": "Login successful. Redirecting to homepage...",
+    "not_auth": "You are not authorized to view this page.",
+    "lang": {
+      "dutch": "Dutch",
+      "en": "English",
+      "language": "Language"
+    },
+    "copy": {
+      "amount": "Number of copies"
+    },
+    "users": {
+      "users": "Users"
+    },
+    "user": {
+      "users": "Users",
+      "add": "Add New User",
+      "login": "Login",
+      "or": "Or",
+      "logout": "Logout",
+      "members": "Members",
+      "register": "Register",
+      "role": "Role",
+      "delete": "Delete User"
+    },
+    "label": {
+      "username": "Username:",
+      "password": "Password:"
+    }
+  },
+  "book": {
+    "add": "Add Book",
+    "title": "Book",
+    "password": "Password is required",
+    "author": "Author",
+    "create": "Create Book",
+    "copy": {
+      "loading": "Loading book details...",
+      "available": "Available copies",
+      "loan": "Loan",
+      "return": "Return"
+    },
+    "loan": {
+      "return": "Return Book",
+      "success": "Book successfully loaned.",
+      "error": "An error occurred while loaning the book."
+    }
+  },
+  "loan": {
+    "name": "Loans",
+    "return": "Return Book",
+    "load_error": "An error occurred while loading."
+  },
+  "login": {
+    "title": "Login",
+    "button": "Login",
+    "validate": {
+      "name": "Name is required",
+      "password": "Password is required"
+    }
+  }
+}

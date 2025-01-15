@@ -1,20 +1,24 @@
 // pages/books/index.tsx
 
 import React from 'react';
-import Link from 'next/link';
+
 import Head from "next/head";
 import Header from "@components/Header";
-import { Book } from "@types";
+import {Book, User} from "@types";
 import { useState, useEffect } from "react";
 import BookService from "@services/BookService";
 import BooksOverviewTable from "@components/books/BookOverviewTable";
 import AddBookButton from "@components/books/AddBookButton";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const BooksPage: React.FC = () => {
 
+    const { t } = useTranslation();
     const [books, setBooks] = useState<Array<Book>>();
     const [error, setError] = useState<string>();
 
+    const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
 
 
@@ -24,7 +28,8 @@ const BooksPage: React.FC = () => {
         if (!response.ok) {
             if (response.status === 401) {
                 setError(
-                    "You are not authorized to view this page. Please login first."
+                    t('app.not_auth')
+
                 );
             } else {
                 setError(response.statusText);
@@ -36,6 +41,11 @@ const BooksPage: React.FC = () => {
     };
     useEffect(() => {
         getBooks();
+        const loggedInUserString = sessionStorage.getItem('loggedInUser');
+        if (loggedInUserString !== null) {
+            setLoggedInUser(JSON.parse(loggedInUserString));
+        }
+        console.log(loggedInUser)
     }, []);
 
     return (
@@ -52,7 +62,11 @@ const BooksPage: React.FC = () => {
             <Header/>
             <main className="container mt-4 max-w-screen-xl m-auto">
                 <h2>Boeken</h2>
-               <AddBookButton />
+                {loggedInUser && loggedInUser.role === "admin" && (
+
+                    <AddBookButton />
+                )}
+
                 <section>
                     {error && <div className="text-red-800">{error}</div>}
                     {books && (
@@ -65,5 +79,13 @@ const BooksPage: React.FC = () => {
         </>
     );
 };
+export const getServerSideProps = async (context: { locale: any }) => {
+    const { locale } = context;
 
+    return {
+        props: {
+            ...(await serverSideTranslations(locale ?? 'nl', ['common'])),
+        },
+    };
+};
 export default BooksPage;

@@ -47,7 +47,7 @@ const createLoan = async ({
         userId: string;
     }): Promise<Loan> => {
 
-    console.log(userId);
+
         const user = await usersDb.getUserById(userId);
         if (user === null) {
             throw new Error('User not found.');
@@ -57,7 +57,12 @@ const createLoan = async ({
         if(bookCopy === null){
             throw new Error('BookCopy not found.');
         }
-        const loan = new Loan({ bookCopy: bookCopy, user,borrowDate: new Date(),dueDate: new Date() });
+    const loan = new Loan({
+        bookCopy: bookCopy,
+        user,
+        borrowDate: new Date(),
+        dueDate: new Date(new Date().setMonth(new Date().getMonth() + 1))
+    });
         return await loanDb.createLoan(loan);
 }
 

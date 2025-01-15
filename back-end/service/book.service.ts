@@ -12,7 +12,6 @@ const getAllBooks = async (): Promise<Book[]> => bookDb.getAllBooks();
 const createBook = async (book: BookInput): Promise<Book> => {
 
 
-
     const newBook = new Book(
         {
             title: book.title,
@@ -22,15 +21,20 @@ const createBook = async (book: BookInput): Promise<Book> => {
     );
 
 
-    // Create copies of the book based on the specified number
-
-
 
    const NewBook =  await bookDb.createBook(newBook);
-
-   if(NewBook.getId() === undefined){
+    const newId = NewBook.getId();
+   if(newId === undefined){
          throw new Error('Book not created');
    }
+
+    // Create copies of the book based on the specified number
+    const copies = book.copies;
+    for (let i = 0; i < copies; i++) {
+            await bookCopyDb.createBookCopy(newId);
+    }
+
+
     return newBook;
 
 }

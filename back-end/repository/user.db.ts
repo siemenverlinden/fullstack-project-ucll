@@ -82,6 +82,7 @@ const createUser = async (user: User): Promise<User> => {
     }
 }
 const deleteUser = async (id: string): Promise<void> => {
+    console.log(id)
     try {
         await database.user.delete({
             where: {

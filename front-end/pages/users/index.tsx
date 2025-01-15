@@ -7,8 +7,12 @@ import Header from "@components/Header";
 import UsersOverviewTable from "@components/users/UserOverviewTable";
 import { User } from "@types";
 import UserService from "@services/UserService";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const UsersPage: React.FC = () => {
+
+    const { t } = useTranslation();
 
     const [users, setUsers] = useState<Array<User>>();
     const [error, setError] = useState<string>();
@@ -20,7 +24,7 @@ const UsersPage: React.FC = () => {
         if (!response.ok) {
             if (response.status === 401) {
                 setError(
-                    'You are not authorized to view this page. Please login first.'
+                    t('app.not_auth')
                 );
             } else {
                 setError(response.statusText);
@@ -50,7 +54,7 @@ const UsersPage: React.FC = () => {
             </Head>
             <Header/>
             <main className="container mt-4">
-                <h2>Leden</h2>
+                <h2>{t('app.users.users')}</h2>
                 <section>
                     {error && <div className="text-red-800">{error}</div>}
                     {users && (
@@ -63,5 +67,13 @@ const UsersPage: React.FC = () => {
         </>
     );
 };
+export const getServerSideProps = async (context: { locale: any }) => {
+    const { locale } = context;
 
+    return {
+        props: {
+            ...(await serverSideTranslations(locale ?? 'nl', ['common'])),
+        },
+    };
+};
 export default UsersPage;

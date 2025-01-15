@@ -2,6 +2,7 @@ import React from "react";
 import {User} from "@types";
 import Link from "next/link";
 import userService from "@services/UserService";
+import {useTranslation} from "next-i18next";
 
 type Props = {
     users: Array<User>;
@@ -45,19 +46,20 @@ const deleteUser = async (id: String) => {
 const UsersOverviewTable: React.FC<Props> = ({
     users,
 }: Props) => {
+    const { t } = useTranslation();
     return (
 
         <>
-            <a href="/login" className="btn btn-success">
-                Nieuw lid aanmaken
+            <a href="/users/add" className="btn btn-success">
+                {t('app.user.register')}
             </a>
             {users && (
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <th>E-mailadres</th>
-                        <th>Role</th>
-                        <th>Acties</th>
+                        <th>E-mail</th>
+                        <th>{t('app.user.role')}</th>
+                        <th>{t('actions')}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -75,7 +77,7 @@ const UsersOverviewTable: React.FC<Props> = ({
                                 </div>
                             </td>
                             <td>
-                                <button className="btn btn-error btn-sm"    onClick={(e) => deleteUser(user.id)}>Verwijderen</button>
+                                <button className="btn btn-error btn-sm"    onClick={(e) => deleteUser(user.id)}>{t('app.user.delete')}</button>
                             </td>
                         </tr>
                     ))}

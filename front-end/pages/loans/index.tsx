@@ -8,16 +8,16 @@ import useInterval from "use-interval";
 import {json} from "next/dist/client/components/react-dev-overlay/server/shared";
 import {log} from "next/dist/server/typescript/utils";
 import LoanOverviewTable from "@components/loans/LoanOverviewTable";
-
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 const LoansPage: React.FC = () => {
-
+    const { t } = useTranslation();
     const [loans, setLoans] = useState<Array<Loan>>();
     const [error, setError] = useState<string>();
     const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
 
     useEffect(() => {
-        console.log('save to state')
         const loggedInUserString = sessionStorage.getItem('loggedInUser');
         if (loggedInUserString !== null) {
             setLoggedInUser(JSON.parse(loggedInUserString));
@@ -25,7 +25,7 @@ const LoansPage: React.FC = () => {
     }, []);
 
     const getLoans = async () => {
-        if (!loggedInUser) return; // Ensure loggedInUser is available
+        if (!loggedInUser) return;
 
         setError('');
         try {
@@ -33,7 +33,7 @@ const LoansPage: React.FC = () => {
             if (!response.ok) {
                 if (response.status === 401) {
                     setError(
-                        'You are not authorized to view this page. Please login first.'
+                        t('app.not_auth')
                     );
                 } else {
                     setError(response.statusText);
@@ -43,11 +43,10 @@ const LoansPage: React.FC = () => {
                 setLoans(loans);
             }
         } catch (error) {
-            setError('Failed to fetch loans.');
+            setError( t('loan.load_error'));
             console.error(error);
         }
         }
-// Fetch loans when loggedInUser is set
     useEffect(() => {
         if (loggedInUser) {
             getLoans();
@@ -70,7 +69,7 @@ const LoansPage: React.FC = () => {
                 </Head>
                 <Header/>
                 <main className="contain mt-4 ">
-                    <h2>Uitleningen</h2>
+                    <h2> {t('loan.name')}</h2>
                     {error && <div className="text-red-800">{error}</div>}
                     {loans && (
                         <LoanOverviewTable loans={loans}  />
@@ -79,5 +78,13 @@ const LoansPage: React.FC = () => {
             </>
         );
     };
+export const getServerSideProps = async (context: { locale: any }) => {
+    const { locale } = context;
 
+    return {
+        props: {
+            ...(await serverSideTranslations(locale ?? 'nl', ['common'])),
+        },
+    };
+};
     export default LoansPage;

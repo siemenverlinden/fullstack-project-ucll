@@ -1,14 +1,14 @@
 // pages/books/index.tsx
 
 import React, {useState} from 'react';
-import Link from 'next/link';
 import Head from "next/head";
 import Header from "@components/Header";
-import BooksOverviewTable from "@components/books/BookOverviewTable";
 import AddBook from "@components/books/AddBook";
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const AddBookPage: React.FC = () => {
-
+    const { t } = useTranslation();
     return (
         <>
             <Head>
@@ -22,11 +22,20 @@ const AddBookPage: React.FC = () => {
             </Head>
             <Header/>
             <main className="container mt-4">
-                <h2>Nieuw Boek Toevoegen</h2>
+                <h2>{t('app.book.add')}</h2>
                 <AddBook />
             </main>
         </>
     );
 };
 
+export const getServerSideProps = async (context: { locale: any }) => {
+    const { locale } = context;
+
+    return {
+        props: {
+            ...(await serverSideTranslations(locale ?? 'nl', ['common'])),
+        },
+    };
+};
 export default AddBookPage;

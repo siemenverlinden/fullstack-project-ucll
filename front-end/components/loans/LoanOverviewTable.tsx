@@ -3,6 +3,7 @@ import {Loan} from "@types";
 import Link from "next/link";
 import LoanService from "@services/LoanService";
 import {formatDate} from "../../utils/dateUtils";
+import {useTranslation} from "next-i18next";
 type Props = {
     loans: Array<Loan>;
 };
@@ -14,6 +15,7 @@ const returnBook = async (loan: Loan) => {
 const LoanOverviewTable: React.FC<Props> = ({
     loans,
 }: Props) => {
+    const { t } = useTranslation();
     return (
         <>
                 {loans  && (
@@ -23,9 +25,9 @@ const LoanOverviewTable: React.FC<Props> = ({
                             {/* head */}
                             <thead>
                             <tr>
-                                <th>Boek</th>
-                                <th>Retour datum</th>
-                                <th>Actie</th>
+                                <th>{t('book.title')}</th>
+                                <th>{t('book.loan.return')}</th>
+                                <th>{t('action')}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -35,7 +37,7 @@ const LoanOverviewTable: React.FC<Props> = ({
                                     {<td>{formatDate(loan.dueDate)}</td>}
                                     <td>
                                         <button className="btn btn-warning "
-                                                onClick={() => returnBook(loan)}>Retourneren
+                                                onClick={() => returnBook(loan)}>{t('book.copy.return')}
                                         </button>
                                     </td>
                                 </tr>

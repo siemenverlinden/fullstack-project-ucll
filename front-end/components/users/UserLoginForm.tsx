@@ -3,8 +3,11 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import UserService from "@services/UserService";
+import Link from "next/link";
+import {useTranslation} from "next-i18next";
 
 const UserLoginForm: React.FC = () => {
+    const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -101,7 +104,7 @@ const UserLoginForm: React.FC = () => {
             )}
             <div className="card w-96 bg-base-100 border m-auto">
                 <div className="card-body">
-                    <h2 className="card-title text-2xl font-bold mb-6">Login</h2>
+                    <h2 className="card-title text-2xl font-bold mb-6">{t('app.user.login')}</h2>
                     <Link key="register" href="/register"/>
                     <form className="form-signin" onSubmit={handleSubmit}>
                         <div className="form-control">
@@ -149,49 +152,16 @@ const UserLoginForm: React.FC = () => {
                         </div>
                         <div className="form-control mt-6">
                             <button type={"submit"} className="btn btn-primary">
-                                Login
+                                {t('app.user.login')}
                             </button>
                         </div>
                     </form>
-                    <div className="divider">OR</div>
+                    <div className="divider">{t('app.user.or')}</div>
                     <div className="text-center">
-                        <p>Don't have an account?</p>
-                        <a href="#" className="link link-primary">Sign up now</a>
+                        <a href="/users/add" className="link link-primary"> {t('app.user.add')}</a>
                     </div>
                 </div>
             </div>
-            {/*<form className="form-signin" onSubmit={handleSubmit}>*/}
-            {/*    <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"*/}
-            {/*         alt="" width="72" height="72"/>*/}
-            {/*    <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>*/}
-
-            {/*    <div className="block mb-2 text-sm font-medium">*/}
-            {/*        <input*/}
-            {/*            className="form-control"*/}
-            {/*            id="mailInput"*/}
-            {/*            type="email"*/}
-            {/*            value={email}*/}
-            {/*            placeholder={"Email"}*/}
-            {/*            onChange={(event) => setEmail(event.target.value)}*/}
-            {/*        />*/}
-            {/*        {emailError && <div className="text-red-800">{emailError}</div>}*/}
-            {/*        <input*/}
-            {/*            className="form-control"*/}
-            {/*            id="passwordInput"*/}
-            {/*            type="password"*/}
-            {/*            value={password}*/}
-            {/*            placeholder={"Password"}*/}
-            {/*            onChange={(event) => setPassword(event.target.value)}*/}
-            {/*        />*/}
-            {/*        {passwordError && (*/}
-            {/*            <div className="text-red-800">{passwordError}</div>*/}
-            {/*        )}*/}
-            {/*    </div>*/}
-
-            {/*    <button type="submit" className="btn btn-lg btn-primary btn-block">*/}
-            {/*        Inloggen*/}
-            {/*    </button>*/}
-            {/*</form>*/}
 
             <div className="debug-login">
                 <br/>

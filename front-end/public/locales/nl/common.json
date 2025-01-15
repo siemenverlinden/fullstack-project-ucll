@@ -1,0 +1,68 @@
+{
+  "app": {
+    "loans": "Uitleningen",
+    "books": "Boeken",
+    "title": "Welkom bij Bibliotheca",
+    "description": "Welkom in het bibliotheek beheer programma.",
+    "success": "Login succesful. Redirecting to homepage...",
+    "not_auth": "U bent niet geautoriseerd om deze pagina te bekijken.",
+    "lang": {
+      "dutch": "Nederlands",
+      "en": "Engels",
+      "language": "Taal"
+    },
+    "copy": {
+      "amount": "Aantal exemplaren"
+    },
+    "users": {
+      "users": "Gebruikers"
+    },
+      "user": {
+        "users": "Gebruikers",
+        "add": "Nieuwe gebruiker Toevoegen",
+        "login": "Login",
+        "or": "Of",
+        "logout": "Uitloggen",
+        "members": "Gebruikers",
+        "register": "Registreren",
+        "role": "Rol",
+        "delete": "Gebruiker wissen"
+      },
+      "label": {
+        "username": "Username:",
+        "password": "Password:"
+      }
+  },
+  "book": {
+    "add": "Boek toevoegen",
+    "title": "Boek",
+    "password": "Password is required",
+    "author" : "Auteur",
+    "create" : "Boek aanmaken",
+    "copy": {
+      "loading": "Loading book details...",
+      "available": "Beschikbare examplaren",
+      "loan": "Uitlenen",
+      "return": "Inleveren"
+    },
+    "loan" : {
+        "return": "Boek inleveren",
+
+        "success": "Boek succesvol uitgeleend.",
+        "error": "Er is een fout opgetreden bij het uitlenen van het boek."
+    }
+  },
+  "loan" : {
+    "name": "Uitleningen",
+    "return": "Boek inleveren",
+    "load_error": "Er is een fout opgetreden bij het laden."
+  },
+  "login": {
+    "title": "Login",
+    "button": "Login",
+    "validate": {
+      "name": "Name is required",
+      "password": "Password is required"
+    }
+  }
+}

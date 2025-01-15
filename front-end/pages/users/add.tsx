@@ -6,16 +6,14 @@ import Head from "next/head";
 import Header from "@components/Header";
 import AddBook from "@components/books/AddBook";
 import AddUser from "@components/users/AddUser";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const BooksPage: React.FC = () => {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [copies, setCopies] = useState(1);
+    const { t } = useTranslation();
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Voeg logica toe om het boek toe te voegen
-    };
+
+
 
     return (
         <>
@@ -31,12 +29,21 @@ const BooksPage: React.FC = () => {
                 </Head>
                 <Header/>
                 <main className="container mt-4">
-                    <h2>Nieuwe gebruiken Toevoegen</h2>
-                    <AddUser />
+                    <h2>{t('app.user.add')}</h2>
+                    <AddUser  />
                 </main>
             </>
         </>
     );
 };
 
+export const getServerSideProps = async (context: { locale: any }) => {
+    const { locale } = context;
+
+    return {
+        props: {
+            ...(await serverSideTranslations(locale ?? 'nl', ['common'])),
+        },
+    };
+};
 export default BooksPage;

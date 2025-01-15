@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Book} from "@types";
 import Link from "next/link";
+import {useTranslation} from "next-i18next";
 
 
 
 const AddBookButton: React.FC = () => {
+
+    const { t } = useTranslation();
     const [loggedInUser, setLoggedInUser] = useState<String>(null);
 
     useEffect(() => {
@@ -16,7 +19,7 @@ const AddBookButton: React.FC = () => {
         <>
             {loggedInUser && (
             <Link href="/books/add" className="btn btn-success mb-3">
-                Nieuw Boek Toevoegen
+                {t('book.add')}
             </Link>
                 )}
         </>

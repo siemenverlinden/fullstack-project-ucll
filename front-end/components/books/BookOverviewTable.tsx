@@ -52,15 +52,19 @@ const BooksOverviewTable: React.FC<Props> = ({
             <div className="join join-vertical w-full">
 
                 {books.map((book) => (
+
+
+
+
                     <div key={book.id} className="collapse collapse-arrow join-item border-base-300 border"
-                         onClick={() => selectBook(book)}>
-                        <input type="radio" name={`my-accordion-${book.id}`}/>
-                        <div className="collapse-title text-xl font-medium">{book.title} | {book.authors}
-                        </div>
+                                       onClick={() => selectBook(book)}>
+                <input type="radio" name={`my-accordion-${book.id}`}/>
+                <div className="collapse-title text-xl font-medium">{book.title} | {book.authors}
+                </div>
 
-                        <div className="collapse-content">
+                <div className="collapse-content">
 
-                            {selectedBook && selectedBook.id === book.id && bookCopiesAvailable && (
+                {selectedBook && selectedBook.id === book.id && bookCopiesAvailable && (
 
                                 <BookCopyAvailable bookCopiesAvailable={bookCopiesAvailable} />
                             )}

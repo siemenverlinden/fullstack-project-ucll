@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {BookCopy} from "@types";
 import Link from "next/link";
 import LoanService from "@services/LoanService";
+import {useTranslation} from "next-i18next";
 type Props = {
     bookCopiesAvailable: BookCopy[];
 };
@@ -12,17 +13,17 @@ const loanBookCopy = async (bookCopy: BookCopy) => {
 
 const BookCopyAvailable: React.FC<Props> = ({
                                                 bookCopiesAvailable
-}: Props) => {
+}: Props) =>
+{
+    const { t } = useTranslation();
     // @ts-ignore
     const [loggedInUser, setLoggedInUser] = useState<String>(null);
     useEffect(() => {
-        console.log(bookCopiesAvailable)
-        // @ts-ignore
         return setLoggedInUser(sessionStorage.getItem("loggedInUser"));
     }, []);
 
     if (!bookCopiesAvailable) {
-        return <div>Loading book details...</div>;
+        return <div>{t('book.copy.loading')}</div>;
     }
 
     return (
@@ -31,7 +32,7 @@ const BookCopyAvailable: React.FC<Props> = ({
                 <div className={"flex items-end"}>
                 <div className=" flex-col stats shadow">
                     <div className="stat">
-                        <div className="stat-title">Beschikbare examplaren</div>
+                        <div className="stat-title">{t('book.copy.available')}</div>
                         <div className="stat-value text-center">{bookCopiesAvailable.length}</div>
                     </div>
                 </div>
@@ -39,10 +40,10 @@ const BookCopyAvailable: React.FC<Props> = ({
                     {loggedInUser && bookCopiesAvailable.length && bookCopiesAvailable[0] && (
                         <button
                             type="button"
-                            className=" btn btn-success ml-5 "
+                            className=" btn btn btn-info ml-5 "
                             onClick={() => loanBookCopy(bookCopiesAvailable[0])}
                         >
-                            Uitlenen
+                            {t('book.copy.loan')}
                         </button>
                     )}
                 </div>

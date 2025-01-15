@@ -1,23 +1,25 @@
-import {Book} from "@types";
+import {Book, StatusMessage} from "@types";
 import Link from "next/link";
 import React, { useState } from 'react';
 import BookService from "@services/BookService";
 import UserService from "@services/UserService";
+import {useTranslation} from "next-i18next";
 
-type Props = {
-    books: Array<Book>;
-};
-
-const AddUser: React.FC<Props> = () => {
+const AddUser: React.FC = () => {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [emailError, setEmailError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [isbnError, setIsbnError] = useState<string | null>(null);
+    const [statusMessage, setStatusMessage] = useState<StatusMessage | null>(null);
+
+
     const clearErrors = () => {
         setEmailError(null);
         setPasswordError(null);
+        setStatusMessage(null);
     };
 
     const validate = (): boolean => {
@@ -45,7 +47,8 @@ const AddUser: React.FC<Props> = () => {
             return;
         }
 
-        const user = {
+
+            const user = {
             email: email,
             password: password,
         };
@@ -53,40 +56,28 @@ const AddUser: React.FC<Props> = () => {
 
         const response = await UserService.createUser(user);
 
-        // if (response.status === 200) {
-        //     setStatusMessages([{ message: 'login.success', type: 'success' }]);
-        //
-        //     const user = await response.json();
-        //     sessionStorage.setItem(
-        //         'loggedInUser',
-        //         JSON.stringify({
-        //             token: user.token,
-        //             fullname: user.fullname,
-        //             username: user.username,
-        //             role: user.role,
-        //         })
-        //     );
-        //     setTimeout(() => {
-        //         router.push('/');
-        //     }, 2000);
-        // } else if (response.status === 401) {
-        //     const { errorMessage } = await response.json();
-        //     setStatusMessages([{ message: errorMessage, type: 'error' }]);
-        // } else {
-        //     setStatusMessages([
-        //         {
-        //             message: t('general.error'),
-        //             type: 'error',
-        //         },
-        //     ]);
-        // }
+        if (response.status === 200) {
+            setStatusMessage({message: "user created", type: "success"});
+        }else{
+            setStatusMessage({message: "user not created", type: "error"});
+        }
+
     };
 
     return (
         <>
+            {statusMessage && (
+                <div
+                    className={`alert ${statusMessage.type === "error" ? "alert-danger" : "alert-success"}`}
+                    role="alert"
+                >
+                    {statusMessage.message}
+                    {statusMessage.type === "success"}
+                </div>
+            )}
             <div className="card w-96 bg-base-100 border m-auto">
                 <div className="card-body">
-                    <h2 className="card-title text-2xl font-bold mb-6">Registeren</h2>
+                    <h2 className="card-title text-2xl font-bold mb-6">{t('app.user.register')}</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-control">
                             <label className="input input-bordered flex items-center gap-2">
@@ -121,7 +112,7 @@ const AddUser: React.FC<Props> = () => {
                         </div>
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary">
-                                Registeren
+                                {t('app.user.register')}
                             </button>
                         </div>
                     </form>
